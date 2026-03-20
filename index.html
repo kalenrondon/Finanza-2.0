@@ -204,17 +204,22 @@ tbody tr:hover td{background:var(--bg);}
 .div-val{font-family:'DM Mono';font-weight:500;color:var(--accent);}
 
 /* ══ CONFIG MODAL ══ */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:16px;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);z-index:500;align-items:flex-end;justify-content:center;padding:0;}@media(min-width:600px){.overlay{align-items:center;padding:16px;}}
 .overlay.open{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px;max-width:540px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.12);animation:fadeUp .2s ease;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:18px 18px 0 0;padding:20px 20px 32px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,.18);animation:slideUp .25s ease;}
+@media(min-width:600px){.modal{border-radius:18px;padding:24px;max-width:540px;max-height:92vh;animation:fadeUp .2s ease;}}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal::before{content:'';display:block;width:36px;height:4px;background:var(--muted2);border-radius:2px;margin:0 auto 16px;cursor:grab;}
+@media(min-width:600px){.modal::before{display:none;}}
 .modal-title{font-size:1.05rem;font-weight:700;margin-bottom:4px;}
 .modal-desc{font-size:.8rem;color:var(--muted);margin-bottom:16px;line-height:1.5;}
 
 /* CONFIG TABS */
-.cfg-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:16px;overflow-x:auto;}
-.cfg-tab{padding:8px 14px;background:transparent;border:none;color:var(--muted);font-family:'DM Sans';font-size:.8rem;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;white-space:nowrap;}
-.cfg-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
-.cfg-tab:hover:not(.active){color:var(--text2);}
+.cfg-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:16px;}
+@media(min-width:500px){.cfg-tabs{grid-template-columns:repeat(8,1fr);}}
+.cfg-tab{padding:7px 4px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:'DM Sans';font-size:.72rem;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;text-align:center;}
+.cfg-tab.active{color:var(--accent);background:var(--accentBg);border-color:var(--accent);}
+.cfg-tab:hover:not(.active){color:var(--text2);background:var(--border2);}
 
 /* TEMA CARDS */
 .tema-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
@@ -338,7 +343,7 @@ tbody tr:hover td{background:var(--bg);}
           </select>
         </div>
         <div class="field"><label>Categoría</label><select id="mv-cat"></select></div>
-        <div class="field"><label>Monto</label><input type="number" id="mv-monto" placeholder="150000" min="0"></div>
+        <div class="field"><label>Monto</label><input type="text" id="mv-monto" placeholder="150.000" inputmode="decimal" data-money="true"></div>
         <div class="field"><label>¿De quién?</label>
           <select id="mv-persona"><option value="p1" id="mvop1">Kalen</option><option value="p2" id="mvop2">Rosa</option><option value="juntos">Juntos</option></select>
         </div>
@@ -397,8 +402,8 @@ tbody tr:hover td{background:var(--bg);}
         <div class="fgrid">
           <div class="field"><label>¿Quién debe?</label><select id="d-persona"><option value="p1" id="dop1">Kalen</option><option value="p2" id="dop2">Rosa</option><option value="juntos">Juntos</option></select></div>
           <div class="field"><label>Acreedor</label><input type="text" id="d-acreedor" placeholder="Banco, ICETEX…"></div>
-          <div class="field"><label>Total ($)</label><input type="number" id="d-total" placeholder="2000000" min="0"></div>
-          <div class="field"><label>Cuota mensual ($)</label><input type="number" id="d-cuota" placeholder="100000" min="0"></div>
+          <div class="field"><label>Total ($)</label><input type="text" id="d-total" placeholder="2.000.000" inputmode="decimal" data-money="true"></div>
+          <div class="field"><label>Cuota mensual ($)</label><input type="text" id="d-cuota" placeholder="100.000" inputmode="decimal" data-money="true"></div>
           <div class="field"><label>Descripción</label><input type="text" id="d-desc" placeholder="ej: Crédito moto"></div>
           <div class="field"><label>Vencimiento</label><input type="date" id="d-vence"></div>
         </div>
@@ -410,7 +415,7 @@ tbody tr:hover td{background:var(--bg);}
       <div class="card"><div class="card-title">Registrar ahorro</div>
         <div class="fgrid">
           <div class="field"><label>¿Quién?</label><select id="a-persona"><option value="p1" id="aop1">Kalen</option><option value="p2" id="aop2">Rosa</option><option value="juntos">Juntos</option></select></div>
-          <div class="field"><label>Monto ($)</label><input type="number" id="a-monto" placeholder="200000" min="0"></div>
+          <div class="field"><label>Monto ($)</label><input type="text" id="a-monto" placeholder="200.000" inputmode="decimal" data-money="true"></div>
           <div class="field"><label>Tipo</label><select id="a-tipo"><option>Efectivo</option><option>Banco</option><option>CDT/Inversión</option><option>Alcancía</option></select></div>
           <div class="field"><label>Para qué</label><input type="text" id="a-desc" placeholder="ej: Fondo emergencia"></div>
           <div class="field"><label>Fecha</label><input type="date" id="a-fecha"></div>
@@ -423,8 +428,8 @@ tbody tr:hover td{background:var(--bg);}
       <div class="card"><div class="card-title">Nueva meta</div>
         <div class="fgrid">
           <div class="field"><label>Nombre</label><input type="text" id="mt-nombre" placeholder="Vacaciones Cartagena"></div>
-          <div class="field"><label>Objetivo ($)</label><input type="number" id="mt-objetivo" placeholder="3000000" min="0"></div>
-          <div class="field"><label>Ahorrado ya ($)</label><input type="number" id="mt-actual" placeholder="0" min="0"></div>
+          <div class="field"><label>Objetivo ($)</label><input type="text" id="mt-objetivo" placeholder="3.000.000" inputmode="decimal" data-money="true"></div>
+          <div class="field"><label>Ahorrado ya ($)</label><input type="text" id="mt-actual" placeholder="0" inputmode="decimal" data-money="true"></div>
           <div class="field"><label>¿De quién?</label><select id="mt-persona"><option value="p1" id="mtop1">Kalen</option><option value="p2" id="mtop2">Rosa</option><option value="juntos">Juntos</option></select></div>
           <div class="field"><label>Fecha límite</label><input type="date" id="mt-fecha"></div>
           <div class="field"><label>Emoji</label><input type="text" id="mt-emoji" placeholder="🏖️" maxlength="4"></div>
@@ -472,8 +477,8 @@ tbody tr:hover td{background:var(--bg);}
       <div class="card-title">Agregar gasto fijo</div>
       <div class="fgrid">
         <div class="field"><label>Nombre</label><input type="text" id="gf-nombre" placeholder="ej: Arriendo"></div>
-        <div class="field"><label>Monto mensual ($)</label><input type="number" id="gf-monto" placeholder="500000" min="0"></div>
-        <div class="field"><label>Día del mes</label><input type="number" id="gf-dia" placeholder="1" min="1" max="31"></div>
+        <div class="field"><label>Monto mensual ($)</label><input type="text" id="gf-monto" placeholder="500.000" inputmode="decimal" data-money="true"></div>
+        <div class="field"><label>Día del mes</label><input type="number" id="gf-dia" placeholder="1" min="1" max="31" inputmode="numeric"></div>
         <div class="field"><label>Categoría</label><select id="gf-cat"></select></div>
         <div class="field"><label>¿De quién?</label><select id="gf-persona"><option value="p1" id="gfop1">Kalen</option><option value="p2" id="gfop2">Rosa</option><option value="juntos">Juntos</option></select></div>
       </div>
@@ -494,7 +499,7 @@ tbody tr:hover td{background:var(--bg);}
       <div class="card-title">Calculadora de división</div>
       <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">¿Cuánto debe poner cada uno según sus ingresos este mes?</p>
       <div class="fgrid" style="margin-bottom:14px;">
-        <div class="field"><label>Gasto total a dividir ($)</label><input type="number" id="div-total" placeholder="1000000" min="0" oninput="calcDivision()"></div>
+        <div class="field"><label>Gasto total a dividir ($)</label><input type="text" id="div-total" placeholder="1.000.000" inputmode="decimal" data-money="true" oninput="calcDivision()"></div>
         <div class="field"><label>Tipo de división</label>
           <select id="div-tipo" onchange="calcDivision()">
             <option value="igual">50/50 — Partes iguales</option>
@@ -502,7 +507,7 @@ tbody tr:hover td{background:var(--bg);}
             <option value="manual">Manual (porcentaje)</option>
           </select>
         </div>
-        <div class="field" id="divPct1Field" style="display:none;"><label id="divPct1Label">% Kalen</label><input type="number" id="div-pct1" placeholder="50" min="0" max="100" oninput="calcDivision()"></div>
+        <div class="field" id="divPct1Field" style="display:none;"><label id="divPct1Label">% Kalen</label><input type="text" id="div-pct1" placeholder="50" inputmode="decimal" oninput="calcDivision()"></div>
       </div>
       <div id="divResult" class="div-result" style="display:none;"></div>
     </div>
@@ -659,9 +664,11 @@ tbody tr:hover td{background:var(--bg);}
       </div>
       <div class="cfg-row">
         <div class="cfg-row-info"><div class="cfg-row-label">Idioma de la app</div><div class="cfg-row-desc">Próximamente más idiomas</div></div>
-        <select class="filter-sel" id="cfgIdioma" onchange="S.cfg.idioma=this.value;save();">
+        <select class="filter-sel" id="cfgIdioma" onchange="S.cfg.idioma=this.value;save();applyLang();">
           <option value="es">🇨🇴 Español</option>
-          <option value="en">🇺🇸 English (soon)</option>
+          <option value="en">🇺🇸 English</option>
+          <option value="pt">🇧🇷 Português</option>
+          <option value="fr">🇫🇷 Français</option>
         </select>
       </div>
     </div>
@@ -700,7 +707,7 @@ tbody tr:hover td{background:var(--bg);}
     <div class="fgrid">
       <div class="field"><label>Tipo</label><select id="edit-tipo"><option value="ingreso">Ingreso</option><option value="gasto">Gasto</option></select></div>
       <div class="field"><label>Categoría</label><select id="edit-cat"></select></div>
-      <div class="field"><label>Monto ($)</label><input type="number" id="edit-monto" min="0"></div>
+      <div class="field"><label>Monto ($)</label><input type="text" id="edit-monto" inputmode="decimal" data-money="true"></div>
       <div class="field"><label>¿De quién?</label><select id="edit-persona"><option value="p1" id="edop1">Kalen</option><option value="p2" id="edop2">Rosa</option><option value="juntos">Juntos</option></select></div>
       <div class="field"><label>Descripción</label><input type="text" id="edit-desc"></div>
       <div class="field"><label>Fecha</label><input type="date" id="edit-fecha"></div>
@@ -937,7 +944,7 @@ function renderCatTags(){
   const list=document.getElementById('tagListCats');if(!list)return;
   const cats=getCats();
   list.innerHTML=cats.map(c=>{
-    const isDef=CATS_DEFAULT.includes(c);
+    const isDef=isCatDefault(c);
     return`<div class="tag">${c}${!isDef?`<button class="tag-del" onclick="eliminarCat('${c}')">×</button>`:''}</div>`;
   }).join('');
 }
@@ -945,11 +952,11 @@ function agregarCat(){
   const inp=document.getElementById('catNueva');const v=inp.value.trim();
   if(!v)return;
   if(!S.cfg.catsCustom)S.cfg.catsCustom=[];
-  if(getCats().includes(v)){toast('Ya existe esa categoría','info');return;}
-  S.cfg.catsCustom.push(v);save();renderCatTags();fillCatSelects();inp.value='';beep('ok');toast('Categoría agregada ✓');
+  if(getCats().includes(v)){toast(t('catExiste'),'info');return;}
+  S.cfg.catsCustom.push(v);save();renderCatTags();fillCatSelects();inp.value='';beep('ok');toast(t('catAgregada'));
 }
 function eliminarCat(c){
-  S.cfg.catsCustom=(S.cfg.catsCustom||[]).filter(x=>x!==c);save();renderCatTags();fillCatSelects();toast('Categoría eliminada');
+  S.cfg.catsCustom=(S.cfg.catsCustom||[]).filter(x=>x!==c);save();renderCatTags();fillCatSelects();toast(t('catEliminada'));
 }
 function fillCatSelects(){
   const cats=getCats();
@@ -968,7 +975,7 @@ function openCfg(){
   document.getElementById('cfg-sid').value=S.cfg.sheetId||'';document.getElementById('cfg-url').value=S.cfg.scriptUrl||'';
   document.getElementById('cfgMoneda').value=S.cfg.moneda||'COP';
   document.getElementById('cfgFecha').value=S.cfg.fmtFecha||'DD/MM/YYYY';
-  document.getElementById('cfgIdioma').value=S.cfg.idioma||'es';
+  const idiomaEl=document.getElementById('cfgIdioma');if(idiomaEl)idiomaEl.value=S.cfg.idioma||'es';
   document.getElementById('cfgFraseSeg').value=S.cfg.fraseSeg||18;
   document.getElementById('cfgDiasAviso').value=S.cfg.diasAviso||7;
   const slVol=document.getElementById('sliderVol');slVol.value=S.cfg.volumen||60;document.getElementById('volVal').textContent=(S.cfg.volumen||60)+'%';
@@ -1012,7 +1019,7 @@ function guardarCfg(){
   applyTheme();updateLogo();updateNames();buildHero();buildNavTabs();
   document.getElementById('fraseStrip').style.display=S.cfg.frases!==false?'flex':'none';
   startFrases();
-  save();closeCfg();beep('ok');toast('Ajustes guardados ✓');
+  save();applyLang();closeCfg();beep('ok');toast(t('configGuardada'));
   if(S.cfg.scriptUrl)setSS('ok');
 }
 
@@ -1060,7 +1067,7 @@ function updateNames(){
   ['mvop1','dop1','aop1','mtop1','edop1','gfop1'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=n1;});
   ['mvop2','dop2','aop2','mtop2','edop2','gfop2'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=n2;});
 }
-function setSS(s){document.getElementById('syncDot').className='sync-dot '+s;document.getElementById('syncLabel').textContent=s==='ok'?'Sync ✓':s==='loading'?'Sincronizando…':s==='err'?'Error':'Local';}
+function setSS(s){document.getElementById('syncDot').className='sync-dot '+s;const labels={ok:t('syncOk'),loading:t('syncLoading'),err:t('syncErr'),local:t('syncLocal')};document.getElementById('syncLabel').textContent=labels[s]||t('syncLocal');}
 async function syncS(a,d){if(!S.cfg.scriptUrl)return;setSS('loading');try{await fetch(S.cfg.scriptUrl,{method:'POST',body:JSON.stringify({accion:a,datos:d})});setSS('ok');}catch(e){setSS('err');}}
 
 // ══════════════════════════════════
@@ -1124,7 +1131,7 @@ function confirmarFijos(){
   S.movimientos.filter(m=>m.fijo&&m.tipo==='ingreso').forEach(m=>{S.movimientos.unshift({id:Date.now()+Math.random(),tipo:'ingreso',cat:m.cat,monto:m.monto,persona:m.persona,desc:m.desc+' (fijo)',fecha:hoyStr(),fijo:false});});
   const ymP=prevMes(ym);
   if(!S.sobrantes[ymP]){const mp=getMovsMes(ymP);const ing=mp.filter(m=>m.tipo==='ingreso').reduce((s,m)=>s+Number(m.monto),0);const gas=mp.filter(m=>m.tipo==='gasto').reduce((s,m)=>s+Number(m.monto),0);const cuotas=S.deudas.filter(d=>d.cuota>0&&Number(d.pagado||0)<Number(d.total)).reduce((s,d)=>s+Number(d.cuota),0);const sob=ing-gas-cuotas;if(sob>0)S.sobrantes[ymP]=sob;}
-  save();document.getElementById('alertaMes').style.display='none';actualizarResumen();renderMovMes();beep('ok');toast('Ingresos fijos confirmados ✓');
+  save();document.getElementById('alertaMes').style.display='none';actualizarResumen();renderMovMes();beep('ok');toast(t('ingresosFijosConfirmados'));
 }
 
 // ══════════════════════════════════
@@ -1138,14 +1145,14 @@ function toggleFijoUI(){esFijo=!esFijo;document.getElementById('fijoTog').classL
 //  MOVIMIENTOS
 // ══════════════════════════════════
 function agregarMov(){
-  const tipo=document.getElementById('mv-tipo').value,cat=document.getElementById('mv-cat').value,monto=parseFloat(document.getElementById('mv-monto').value),per=document.getElementById('mv-persona').value,desc=document.getElementById('mv-desc').value,fecha=document.getElementById('mv-fecha').value;
-  if(!monto||monto<=0){beep('err');toast('Pon un monto válido','err');return;}
-  if(!fecha){beep('err');toast('Falta la fecha','err');return;}
+  const tipo=document.getElementById('mv-tipo').value,cat=document.getElementById('mv-cat').value,monto=parseMoneyInput(document.getElementById('mv-monto').value),per=document.getElementById('mv-persona').value,desc=document.getElementById('mv-desc').value,fecha=document.getElementById('mv-fecha').value;
+  if(!monto||monto<=0){beep('err');toast(t('montoValido'),'err');return;}
+  if(!fecha){beep('err');toast(t('faltaFecha'),'err');return;}
   const item={id:Date.now(),tipo,cat,monto,persona:per,desc,fecha,fijo:esFijo};
   S.movimientos.unshift(item);save();actualizarResumen();renderMovMes();
   document.getElementById('mv-monto').value='';document.getElementById('mv-desc').value='';
   esFijo=false;document.getElementById('fijoTog').classList.remove('on');
-  beep('ok');toast(tipo==='ingreso'?'Ingreso registrado ✓'+(item.fijo?' · Fijo':''):'Gasto registrado ✓');
+  beep('ok');toast(tipo==='ingreso'?t('ingresoRegistrado')+(item.fijo?t('fijosMarcado'):''):t('gastoRegistrado'));
   syncS('movimiento',item);
 }
 function renderMovMes(){
@@ -1165,19 +1172,19 @@ function renderMovMes(){
       </div>
     </div>`).join('');
 }
-function delMov(id){S.movimientos=S.movimientos.filter(m=>m.id!==id);save();actualizarResumen();renderMovMes();renderHist();beep('pop');toast('Movimiento eliminado');}
+function delMov(id){S.movimientos=S.movimientos.filter(m=>m.id!==id);save();actualizarResumen();renderMovMes();renderHist();beep('pop');toast(t('movEliminado'));}
 
 // EDITAR
 function openEdit(id){
   const m=S.movimientos.find(m=>m.id===id);if(!m)return;
-  document.getElementById('edit-id').value=id;document.getElementById('edit-tipo').value=m.tipo;document.getElementById('edit-cat').value=m.cat;document.getElementById('edit-monto').value=m.monto;document.getElementById('edit-persona').value=m.persona;document.getElementById('edit-desc').value=m.desc||'';document.getElementById('edit-fecha').value=m.fecha;
+  document.getElementById('edit-id').value=id;document.getElementById('edit-tipo').value=m.tipo;document.getElementById('edit-cat').value=m.cat;document.getElementById('edit-monto').value=formatMoneyInput(String(Math.round(m.monto||0)));document.getElementById('edit-persona').value=m.persona;document.getElementById('edit-desc').value=m.desc||'';document.getElementById('edit-fecha').value=m.fecha;
   document.getElementById('editOv').classList.add('open');
 }
 function closeEdit(){document.getElementById('editOv').classList.remove('open');}
 function guardarEdit(){
   const id=Number(document.getElementById('edit-id').value);const m=S.movimientos.find(m=>m.id===id);if(!m)return;
-  m.tipo=document.getElementById('edit-tipo').value;m.cat=document.getElementById('edit-cat').value;m.monto=parseFloat(document.getElementById('edit-monto').value)||0;m.persona=document.getElementById('edit-persona').value;m.desc=document.getElementById('edit-desc').value;m.fecha=document.getElementById('edit-fecha').value;
-  save();actualizarResumen();renderMovMes();renderHist();closeEdit();beep('ok');toast('Movimiento actualizado ✓');
+  m.tipo=document.getElementById('edit-tipo').value;m.cat=document.getElementById('edit-cat').value;m.monto=parseMoneyInput(document.getElementById('edit-monto').value)||0;m.persona=document.getElementById('edit-persona').value;m.desc=document.getElementById('edit-desc').value;m.fecha=document.getElementById('edit-fecha').value;
+  save();actualizarResumen();renderMovMes();renderHist();closeEdit();beep('ok');toast(t('movActualizado'));
 }
 
 // ══════════════════════════════════
@@ -1231,20 +1238,20 @@ function verDetalleIngresos(){
 //  DEUDAS
 // ══════════════════════════════════
 function agregarDeuda(){
-  const persona=document.getElementById('d-persona').value,acreedor=document.getElementById('d-acreedor').value,total=parseFloat(document.getElementById('d-total').value),cuota=parseFloat(document.getElementById('d-cuota').value)||0,desc=document.getElementById('d-desc').value,vence=document.getElementById('d-vence').value;
-  if(!total||total<=0){beep('err');toast('Pon el monto total','err');return;}if(!acreedor){beep('err');toast('¿A quién le debes?','err');return;}
+  const persona=document.getElementById('d-persona').value,acreedor=document.getElementById('d-acreedor').value,total=parseMoneyInput(document.getElementById('d-total').value),cuota=parseMoneyInput(document.getElementById('d-cuota').value)||0,desc=document.getElementById('d-desc').value,vence=document.getElementById('d-vence').value;
+  if(!total||total<=0){beep('err');toast('Pon el monto total','err');return;}if(!acreedor){beep('err');toast(t('quienLeDebe'),'err');return;}
   const item={id:Date.now(),persona,acreedor,total,cuota,desc,vence,pagado:0};S.deudas.push(item);save();actualizarResumen();renderDeudas();
   document.getElementById('d-acreedor').value='';document.getElementById('d-total').value='';document.getElementById('d-cuota').value='';document.getElementById('d-desc').value='';
-  beep('ok');toast('Deuda registrada ✓');syncS('deuda',item);
+  beep('ok');toast(t('deudaRegistrada'));syncS('deuda',item);
 }
 function pagarDeuda(id){
   const d=S.deudas.find(d=>d.id===id);if(!d)return;const monto=parseFloat(prompt(`Pago a "${d.desc||d.acreedor}" ($)`))||0;if(monto<=0)return;
   d.pagado=Math.min(Number(d.total),(Number(d.pagado)||0)+monto);
   S.movimientos.unshift({id:Date.now(),tipo:'gasto',cat:'Deuda',monto,persona:d.persona,desc:`Pago ${d.acreedor}`,fecha:hoyStr(),fijo:false});
   save();actualizarResumen();renderDeudas();renderMovMes();beep('ok');
-  toast(d.pagado>=d.total?`¡Deuda con ${d.acreedor} saldada! 🎉`:`Pago de ${fmt(monto)} registrado ✓`);
+  toast(d.pagado>=d.total?t('deudaSaldada'):t('pagoRegistrado'));
 }
-function delDeuda(id){S.deudas=S.deudas.filter(d=>d.id!==id);save();actualizarResumen();renderDeudas();beep('pop');toast('Deuda eliminada');}
+function delDeuda(id){S.deudas=S.deudas.filter(d=>d.id!==id);save();actualizarResumen();renderDeudas();beep('pop');toast(t('deudaEliminada'));}
 function renderDeudas(){
   const cont=document.getElementById('listDeudas');let items=S.deudas;if(S.pFiltro!=='todos')items=items.filter(d=>d.persona===S.pFiltro);
   if(!items.length){cont.innerHTML='<div class="empty" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;"><div class="ei">🎉</div>Sin deudas</div>';return;}
@@ -1256,13 +1263,13 @@ function renderDeudas(){
 //  AHORROS
 // ══════════════════════════════════
 function agregarAhorro(){
-  const persona=document.getElementById('a-persona').value,monto=parseFloat(document.getElementById('a-monto').value),tipo=document.getElementById('a-tipo').value,desc=document.getElementById('a-desc').value,fecha=document.getElementById('a-fecha').value||hoyStr();
-  if(!monto||monto<=0){beep('err');toast('Pon el monto','err');return;}
+  const persona=document.getElementById('a-persona').value,monto=parseMoneyInput(document.getElementById('a-monto').value),tipo=document.getElementById('a-tipo').value,desc=document.getElementById('a-desc').value,fecha=document.getElementById('a-fecha').value||hoyStr();
+  if(!monto||monto<=0){beep('err');toast(t('faltaMonto'),'err');return;}
   const item={id:Date.now(),persona,monto,tipo,desc,fecha};S.ahorros.push(item);save();actualizarResumen();renderAhorros();
   document.getElementById('a-monto').value='';document.getElementById('a-desc').value='';
-  beep('ok');toast('Ahorro registrado ✓');syncS('ahorro',item);
+  beep('ok');toast(t('ahorroRegistrado'));syncS('ahorro',item);
 }
-function delAhorro(id){S.ahorros=S.ahorros.filter(a=>a.id!==id);save();actualizarResumen();renderAhorros();beep('pop');toast('Ahorro eliminado');}
+function delAhorro(id){S.ahorros=S.ahorros.filter(a=>a.id!==id);save();actualizarResumen();renderAhorros();beep('pop');toast(t('ahorroEliminado'));}
 function renderAhorros(){
   const cont=document.getElementById('listAhorros');let items=S.ahorros;if(S.pFiltro!=='todos')items=items.filter(a=>a.persona===S.pFiltro);
   if(!items.length){cont.innerHTML='<div class="empty" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;"><div class="ei">💙</div>Sin ahorros</div>';return;}
@@ -1275,14 +1282,14 @@ function renderAhorros(){
 //  METAS
 // ══════════════════════════════════
 function agregarMeta(){
-  const nombre=document.getElementById('mt-nombre').value,objetivo=parseFloat(document.getElementById('mt-objetivo').value),actual=parseFloat(document.getElementById('mt-actual').value)||0,persona=document.getElementById('mt-persona').value,fecha=document.getElementById('mt-fecha').value,emoji=document.getElementById('mt-emoji').value||'🎯';
-  if(!nombre){beep('err');toast('Ponle nombre a la meta','err');return;}if(!objetivo||objetivo<=0){beep('err');toast('Falta el monto objetivo','err');return;}
+  const nombre=document.getElementById('mt-nombre').value,objetivo=parseMoneyInput(document.getElementById('mt-objetivo').value),actual=parseMoneyInput(document.getElementById('mt-actual').value)||0,persona=document.getElementById('mt-persona').value,fecha=document.getElementById('mt-fecha').value,emoji=document.getElementById('mt-emoji').value||'🎯';
+  if(!nombre){beep('err');toast(t('faltaNombreMeta'),'err');return;}if(!objetivo||objetivo<=0){beep('err');toast(t('faltaObjetivo'),'err');return;}
   const item={id:Date.now(),nombre,objetivo,actual,persona,fecha,emoji};S.metas.push(item);save();renderMetas();
   document.getElementById('mt-nombre').value='';document.getElementById('mt-objetivo').value='';document.getElementById('mt-actual').value='';document.getElementById('mt-emoji').value='';
-  beep('ok');toast(`Meta "${nombre}" creada ✓`);syncS('meta',item);
+  beep('ok');toast(t('metaCreada'));syncS('meta',item);
 }
-function abonarMeta(id){const m=S.metas.find(m=>m.id===id);if(!m)return;const monto=parseFloat(prompt(`Abonar a "${m.nombre}" ($)`))||0;if(monto<=0)return;m.actual=(Number(m.actual)||0)+monto;save();renderMetas();beep('ok');toast(m.actual>=m.objetivo?`¡Meta "${m.nombre}" lograda! ${m.emoji} 🎉`:'Abono registrado ✓');}
-function delMeta(id){S.metas=S.metas.filter(m=>m.id!==id);save();renderMetas();beep('pop');toast('Meta eliminada');}
+function abonarMeta(id){const m=S.metas.find(m=>m.id===id);if(!m)return;const monto=parseFloat(prompt(`Abonar a "${m.nombre}" ($)`))||0;if(monto<=0)return;m.actual=(Number(m.actual)||0)+monto;save();renderMetas();beep('ok');toast(m.actual>=m.objetivo?t('metaLograda'):t('abonoRegistrado'));}
+function delMeta(id){S.metas=S.metas.filter(m=>m.id!==id);save();renderMetas();beep('pop');toast(t('metaEliminada'));}
 function renderMetas(){
   const cont=document.getElementById('listMetas');let items=S.metas;if(S.pFiltro!=='todos')items=items.filter(m=>m.persona===S.pFiltro);
   if(!items.length){cont.innerHTML='<div class="empty" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;"><div class="ei">🎯</div>Sin metas</div>';return;}
@@ -1295,10 +1302,10 @@ function renderMetas(){
 // ══════════════════════════════════
 function agregarDiario(){
   const fecha=document.getElementById('di-fecha').value||hoyStr(),nota=document.getElementById('di-nota').value,estado=document.getElementById('di-estado').value;
-  if(!nota.trim()){beep('err');toast('Escribe algo en la nota','err');return;}
+  if(!nota.trim()){beep('err');toast(t('escribeNota'),'err');return;}
   if(!S.diario)S.diario=[];
   S.diario.unshift({id:Date.now(),fecha,nota,estado});save();renderDiario();
-  document.getElementById('di-nota').value='';beep('ok');toast('Entrada guardada ✓');
+  document.getElementById('di-nota').value='';beep('ok');toast(t('entradaGuardada'));
 }
 function delDiario(id){S.diario=S.diario.filter(d=>d.id!==id);save();renderDiario();beep('pop');}
 function renderDiario(){
@@ -1314,7 +1321,7 @@ function renderPresupuesto(){
   const cats=getCats().filter(c=>!['Salario/Nómina','Freelance','Negocio','Arriendo cobrado'].includes(c));
   const grid=document.getElementById('presupGrid');
   const pres=S.cfg.presupuesto||{};
-  grid.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;">'+cats.map(c=>`<div class="field"><label>${c}</label><input type="number" data-cat="${c}" value="${pres[c]||''}" placeholder="Sin límite" min="0" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 11px;font-family:'DM Sans';font-size:.86rem;color:var(--text);"></div>`).join('')+'</div>';
+  grid.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;">'+cats.map(c=>`<div class="field"><label>${c}</label><input type="text" data-cat="${c}" value="${pres[c]?formatMoneyInput(pres[c]):''}" placeholder="Sin límite" inputmode="decimal" data-money="true" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 11px;font-family:'DM Sans';font-size:.86rem;color:var(--text);"></div>`).join('')+'</div>';
   // Resumen vs real
   const ym=hoyMes();const gastosMes=getMovsMes(ym).filter(m=>m.tipo==='gasto');
   const resumen=document.getElementById('presupResumen');
@@ -1327,20 +1334,20 @@ function renderPresupuesto(){
 }
 function guardarPresupuesto(){
   if(!S.cfg.presupuesto)S.cfg.presupuesto={};
-  document.querySelectorAll('#presupGrid input[data-cat]').forEach(el=>{const v=parseFloat(el.value)||0;if(v>0)S.cfg.presupuesto[el.dataset.cat]=v;else delete S.cfg.presupuesto[el.dataset.cat];});
-  save();renderPresupuesto();beep('ok');toast('Límites guardados ✓');
+  document.querySelectorAll('#presupGrid input[data-cat]').forEach(el=>{const v=parseMoneyInput(el.value)||0;if(v>0)S.cfg.presupuesto[el.dataset.cat]=v;else delete S.cfg.presupuesto[el.dataset.cat];});
+  save();renderPresupuesto();beep('ok');toast(t('limitesGuardados'));
 }
 
 // ══════════════════════════════════
 //  GASTOS FIJOS
 // ══════════════════════════════════
 function agregarFijo(){
-  const nombre=document.getElementById('gf-nombre').value,monto=parseFloat(document.getElementById('gf-monto').value),dia=parseInt(document.getElementById('gf-dia').value)||1,cat=document.getElementById('gf-cat').value,persona=document.getElementById('gf-persona').value;
-  if(!nombre||!monto){beep('err');toast('Completa nombre y monto','err');return;}
+  const nombre=document.getElementById('gf-nombre').value,monto=parseMoneyInput(document.getElementById('gf-monto').value),dia=parseInt(document.getElementById('gf-dia').value)||1,cat=document.getElementById('gf-cat').value,persona=document.getElementById('gf-persona').value;
+  if(!nombre||!monto){beep('err');toast(t('completaNombreMonto'),'err');return;}
   if(!S.gastosFijos)S.gastosFijos=[];
   S.gastosFijos.push({id:Date.now(),nombre,monto,dia,cat,persona});save();renderFijos();
   document.getElementById('gf-nombre').value='';document.getElementById('gf-monto').value='';
-  beep('ok');toast('Gasto fijo agregado ✓');
+  beep('ok');toast(t('fijoAgregado'));
 }
 function delFijo(id){S.gastosFijos=S.gastosFijos.filter(f=>f.id!==id);save();renderFijos();beep('pop');}
 function renderFijos(){
@@ -1355,7 +1362,7 @@ function renderFijos(){
 //  DIVISIÓN DE GASTOS
 // ══════════════════════════════════
 function calcDivision(){
-  const total=parseFloat(document.getElementById('div-total').value)||0;
+  const total=parseMoneyInput(document.getElementById('div-total').value)||0;
   const tipo=document.getElementById('div-tipo').value;
   const pct1Field=document.getElementById('divPct1Field');
   const lbl=document.getElementById('divPct1Label');
@@ -1391,7 +1398,7 @@ window.onload=()=>{
   document.getElementById('fraseStrip').style.display=S.cfg.frases!==false?'flex':'none';
   showFrase();startFrases();
 
-  toggleFijoV();checkMesNuevo();actualizarResumen();renderMovMes();poblarMeses();
+  applyLang();toggleFijoV();checkMesNuevo();actualizarResumen();renderMovMes();poblarMeses();initMoneyInputs();
   if(S.cfg.scriptUrl)setSS('ok');
 
   // Notifs on load
@@ -1402,6 +1409,408 @@ window.onload=()=>{
 
   subTab('deudas');
 };
+
+// ══════════════════════════════════════════════════════
+//  i18n — SISTEMA DE IDIOMAS COMPLETO
+// ══════════════════════════════════════════════════════
+const I18N = {
+  es: {
+    appSub:'Finanzas', configBtn:'⚙ Ajustes', syncOk:'Sync ✓', syncLoading:'Sincronizando…', syncErr:'Error', syncLocal:'Local',
+    // Header / nav
+    tabs:{ movimientos:'Movimientos', historial:'Historial', estadisticas:'Estadísticas', finanzas:'Deudas & más', diario:'Diario', presupuesto:'Presupuesto', fijos:'Gastos fijos', division:'División' },
+    // Hero cards
+    hero:{ disponible:'Disponible', ingresos:'Ingresos', gastos:'Gastos', comprometido:'Comprometido', estesMes:'este mes', acumulado:'acumulado · ver mes →', ahorrosCuotas:'ahorros + cuotas' },
+    // Banners
+    arribaronFijos:'¿Llegaron los ingresos fijos?', confirmar:'Confirmar', sobranteMes:'Sobrante del mes anterior',
+    // Movimientos
+    nuevoMov:'Nuevo movimiento', tipo:'Tipo', ingreso:'Ingreso', gasto:'Gasto', categoria:'Categoría', monto:'Monto', deQuien:'¿De quién?', juntos:'Juntos', descripcion:'Descripción', fecha:'Fecha', ingresoFijo:'Ingreso fijo — se confirma cada mes', agregar:'Agregar',
+    estesMesLabel:'Este mes', sinMovimientos:'Sin movimientos este mes',
+    // Historial
+    historialCompleto:'Historial completo', buscar:'Buscar...', todosMeses:'Todos los meses', todos:'Todos', ingresos:'Ingresos', gastos2:'Gastos',
+    // Stats
+    gastosCat:'Gastos por categoría', balanceMes:'Balance por mes', porPersona:'Por persona', sinDatos:'Sin datos',
+    // Deudas
+    subDeudas:'Deudas', subAhorros:'Ahorros', subMetas:'Metas',
+    regDeuda:'Registrar deuda', quienDebe:'¿Quién debe?', acreedor:'Acreedor', total:'Total ($)', cuotaMensual:'Cuota mensual ($)', vencimiento:'Vencimiento', sinDeudas:'Sin deudas',
+    // Ahorros
+    regAhorro:'Registrar ahorro', quienAhorra:'¿Quién ahorra?', paraQue:'Para qué', sinAhorros:'Sin ahorros', totalAhorrado:'Total ahorrado',
+    // Metas
+    nuevaMeta:'Nueva meta', nombre:'Nombre', objetivo:'Objetivo ($)', ahorradoYa:'Ahorrado ya ($)', metaFecha:'Fecha límite', emoji:'Emoji', crearMeta:'Crear meta', sinMetas:'Sin metas', abonar:'Abonar',
+    // Diario
+    nuevaEntrada:'Nueva entrada del diario', estadoAnimo:'Estado de ánimo financiero', notaDia:'Nota del día', notaPlaceholder:'¿Cómo va la plata hoy?', guardarEntrada:'Guardar entrada', sinEntradas:'Sin entradas aún',
+    // Presupuesto
+    limiteMensual:'Límite mensual por categoría', guardarLimites:'Guardar límites', seguimientoMes:'Seguimiento este mes', sinLimites:'', distribucionDe:'DISTRIBUCIÓN DE',
+    // Gastos fijos
+    agregarFijo:'Agregar gasto fijo', diaMes:'Día del mes', sinFijos:'Sin gastos fijos',
+    // División
+    calcDivision:'Calculadora de división', gastoADividir:'Gasto total a dividir ($)', tipoDivision:'Tipo de división', division5050:'50/50 — Partes iguales', divisionProp:'Proporcional a ingresos', divisionManual:'Manual (porcentaje)',
+    // Config
+    ajustes:'Ajustes', personasTab:'Personas', aparienciaTab:'Apariencia', pantallaTab:'Pantalla', sonidoTab:'Sonido', notifsTab:'Notifs', formatoTab:'Formato', categoriasTab:'Categorías', sheetsTab:'Sheets',
+    tuNombre:'Tu nombre', nombrePareja:'Nombre de tu pareja', guardarAjustes:'Guardar ajustes', cancelar:'Cancelar',
+    // Pantalla cfg
+    tarjetasResumen:'Tarjetas del resumen', seccionesTabs:'Secciones / Tabs', frasesCoste:'Frases costeñas', mostrarFrases:'Mostrar frases', velocidadRotacion:'Velocidad de rotación', barraConsejos:'La barra de consejos en la parte superior', siempreVisible:'Siempre visible',
+    cada10:'Cada 10 seg', cada18:'Cada 18 seg', cada30:'Cada 30 seg', cada1min:'Cada 1 min', soloAlAbrir:'Solo al abrir',
+    // Sonido cfg
+    sonidosActivados:'Sonidos activados', feedbackAudio:'Feedback de audio al registrar movimientos', volumen:'Volumen',
+    // Notifs cfg
+    notifsDeudas:'Notificaciones de deudas', avisoVencimiento:'Aviso cuando una deuda vence próximamente', diasAnticipacion:'Días de anticipación',
+    dias3:'3 días antes', dias5:'5 días antes', dias7:'7 días antes', dias15:'15 días antes',
+    // Formato cfg
+    moneda:'Moneda', formatoFecha:'Formato de fecha', idioma:'Idioma',
+    // Categorías cfg
+    categoriaActuales:'Categorías actuales', nuevaCategoria:'Nueva categoría...', agregarBtn:'+ Agregar', noEliminarDefault:'Las categorías predeterminadas no se pueden eliminar.',
+    // Toasts
+    configGuardada:'Ajustes guardados ✓', ingresoRegistrado:'Ingreso registrado ✓', gastoRegistrado:'Gasto registrado ✓', fijosMarcado:' · Fijo',
+    movEliminado:'Movimiento eliminado', movActualizado:'Movimiento actualizado ✓',
+    deudaRegistrada:'Deuda registrada ✓', deudaEliminada:'Deuda eliminada', pagoRegistrado:'Pago registrado ✓', deudaSaldada:'¡Deuda saldada! 🎉',
+    ahorroRegistrado:'Ahorro registrado ✓', ahorroEliminado:'Ahorro eliminado',
+    metaCreada:'Meta creada ✓', metaEliminada:'Meta eliminada', abonoRegistrado:'Abono registrado ✓', metaLograda:'¡Meta lograda! 🎉',
+    entradaGuardada:'Entrada guardada ✓', limitesGuardados:'Límites guardados ✓', fijoAgregado:'Gasto fijo agregado ✓', fijoEliminado:'Gasto fijo eliminado',
+    catAgregada:'Categoría agregada ✓', catEliminada:'Categoría eliminada', catExiste:'Ya existe esa categoría',
+    montoValido:'Pon un monto válido', faltaFecha:'Falta la fecha', faltaMonto:'Pon el monto', quienLeDebe:'¿A quién le debes?',
+    faltaNombreMeta:'Ponle nombre a la meta', faltaObjetivo:'Falta el monto objetivo', escribeNota:'Escribe algo en la nota', completaNombreMonto:'Completa nombre y monto',
+    ingresosFijosConfirmados:'Ingresos fijos confirmados ✓',
+    pagar:'Pagar', pagoA:'Pago a',
+    // Detalle ingresos
+    ingresosEstesMes:'Ingresos —', loQueEntro:'Lo que entró este mes', totalEstesMes:'Total este mes', sobranteAnterior:'+ Sobrante anterior', disponibleBruto:'= Disponible bruto', cerrar:'Cerrar',
+    // Editar
+    editarMov:'Editar movimiento', guardarCambios:'Guardar cambios',
+    // Miscelánea
+    verLogo:'— así se verá el logo', pagado:'% pagado', cuota:'cuota', ahorrado:'Ahorrado', falta:'Falta', sinRegistros:'Sin registros', ingFijo:'fijo',
+    porcentajeDe:'% del límite', pasado:'— ⚠️ pasado',
+  },
+
+  en: {
+    appSub:'Finance', configBtn:'⚙ Settings', syncOk:'Synced ✓', syncLoading:'Syncing…', syncErr:'Error', syncLocal:'Local',
+    tabs:{ movimientos:'Movements', historial:'History', estadisticas:'Statistics', finanzas:'Debts & more', diario:'Journal', presupuesto:'Budget', fijos:'Fixed costs', division:'Split' },
+    hero:{ disponible:'Available', ingresos:'Income', gastos:'Expenses', comprometido:'Committed', estesMes:'this month', acumulado:'total · see month →', ahorrosCuotas:'savings + installments' },
+    arribaronFijos:'Did your fixed income arrive?', confirmar:'Confirm', sobranteMes:'Previous month surplus',
+    nuevoMov:'New movement', tipo:'Type', ingreso:'Income', gasto:'Expense', categoria:'Category', monto:'Amount', deQuien:'Who?', juntos:'Together', descripcion:'Description', fecha:'Date', ingresoFijo:'Fixed income — confirmed monthly', agregar:'Add',
+    estesMesLabel:'This month', sinMovimientos:'No movements this month',
+    historialCompleto:'Full history', buscar:'Search...', todosMeses:'All months', todos:'All', ingresos:'Income', gastos2:'Expenses',
+    gastosCat:'Expenses by category', balanceMes:'Monthly balance', porPersona:'By person', sinDatos:'No data',
+    subDeudas:'Debts', subAhorros:'Savings', subMetas:'Goals',
+    regDeuda:'Register debt', quienDebe:'Who owes?', acreedor:'Creditor', total:'Total ($)', cuotaMensual:'Monthly payment ($)', vencimiento:'Due date', sinDeudas:'No debts',
+    regAhorro:'Register savings', quienAhorra:'Who saves?', paraQue:'Purpose', sinAhorros:'No savings', totalAhorrado:'Total saved',
+    nuevaMeta:'New goal', nombre:'Name', objetivo:'Target ($)', ahorradoYa:'Already saved ($)', metaFecha:'Deadline', emoji:'Emoji', crearMeta:'Create goal', sinMetas:'No goals', abonar:'Add funds',
+    nuevaEntrada:'New journal entry', estadoAnimo:'Financial mood', notaDia:"Today's note", notaPlaceholder:'How are the finances today?', guardarEntrada:'Save entry', sinEntradas:'No entries yet',
+    limiteMensual:'Monthly limit by category', guardarLimites:'Save limits', seguimientoMes:'This month tracking', sinLimites:'', distribucionDe:'SPLIT OF',
+    agregarFijo:'Add fixed expense', diaMes:'Day of month', sinFijos:'No fixed expenses',
+    calcDivision:'Split calculator', gastoADividir:'Total to split ($)', tipoDivision:'Split type', division5050:'50/50 — Equal parts', divisionProp:'Proportional to income', divisionManual:'Manual (percentage)',
+    ajustes:'Settings', personasTab:'People', aparienciaTab:'Appearance', pantallaTab:'Display', sonidoTab:'Sound', notifsTab:'Notifs', formatoTab:'Format', categoriasTab:'Categories', sheetsTab:'Sheets',
+    tuNombre:'Your name', nombrePareja:"Partner's name", guardarAjustes:'Save settings', cancelar:'Cancel',
+    tarjetasResumen:'Summary cards', seccionesTabs:'Sections / Tabs', frasesCoste:'Daily tips', mostrarFrases:'Show tips', velocidadRotacion:'Rotation speed', barraConsejos:'The tips bar at the top', siempreVisible:'Always visible',
+    cada10:'Every 10 sec', cada18:'Every 18 sec', cada30:'Every 30 sec', cada1min:'Every 1 min', soloAlAbrir:'Only on open',
+    sonidosActivados:'Sounds enabled', feedbackAudio:'Audio feedback when logging', volumen:'Volume',
+    notifsDeudas:'Debt notifications', avisoVencimiento:'Alert when a debt is due soon', diasAnticipacion:'Days in advance',
+    dias3:'3 days before', dias5:'5 days before', dias7:'7 days before', dias15:'15 days before',
+    moneda:'Currency', formatoFecha:'Date format', idioma:'Language',
+    categoriaActuales:'Current categories', nuevaCategoria:'New category...', agregarBtn:'+ Add', noEliminarDefault:'Default categories cannot be deleted.',
+    configGuardada:'Settings saved ✓', ingresoRegistrado:'Income added ✓', gastoRegistrado:'Expense added ✓', fijosMarcado:' · Fixed',
+    movEliminado:'Movement deleted', movActualizado:'Movement updated ✓',
+    deudaRegistrada:'Debt registered ✓', deudaEliminada:'Debt deleted', pagoRegistrado:'Payment registered ✓', deudaSaldada:'Debt paid off! 🎉',
+    ahorroRegistrado:'Savings registered ✓', ahorroEliminado:'Savings deleted',
+    metaCreada:'Goal created ✓', metaEliminada:'Goal deleted', abonoRegistrado:'Contribution added ✓', metaLograda:'Goal achieved! 🎉',
+    entradaGuardada:'Entry saved ✓', limitesGuardados:'Limits saved ✓', fijoAgregado:'Fixed expense added ✓', fijoEliminado:'Fixed expense deleted',
+    catAgregada:'Category added ✓', catEliminada:'Category deleted', catExiste:'Category already exists',
+    montoValido:'Enter a valid amount', faltaFecha:'Date is required', faltaMonto:'Enter amount', quienLeDebe:'Who is the creditor?',
+    faltaNombreMeta:'Give the goal a name', faltaObjetivo:'Target amount required', escribeNota:'Write something in the note', completaNombreMonto:'Complete name and amount',
+    ingresosFijosConfirmados:'Fixed income confirmed ✓',
+    pagar:'Pay', pagoA:'Payment to',
+    ingresosEstesMes:'Income —', loQueEntro:'What came in this month', totalEstesMes:'Total this month', sobranteAnterior:'+ Previous surplus', disponibleBruto:'= Gross available', cerrar:'Close',
+    editarMov:'Edit movement', guardarCambios:'Save changes',
+    verLogo:'— preview of logo', pagado:'% paid', cuota:'installment', ahorrado:'Saved', falta:'Remaining', sinRegistros:'No records', ingFijo:'fixed',
+    porcentajeDe:'% of limit', pasado:'— ⚠️ over budget',
+  },
+
+  pt: {
+    appSub:'Finanças', configBtn:'⚙ Ajustes', syncOk:'Sync ✓', syncLoading:'Sincronizando…', syncErr:'Erro', syncLocal:'Local',
+    tabs:{ movimientos:'Movimentos', historial:'Histórico', estadisticas:'Estatísticas', finanzas:'Dívidas & mais', diario:'Diário', presupuesto:'Orçamento', fijos:'Custos fixos', division:'Divisão' },
+    hero:{ disponible:'Disponível', ingresos:'Receitas', gastos:'Despesas', comprometido:'Comprometido', estesMes:'este mês', acumulado:'total · ver mês →', ahorrosCuotas:'poupanças + parcelas' },
+    arribaronFijos:'As receitas fixas chegaram?', confirmar:'Confirmar', sobranteMes:'Saldo do mês anterior',
+    nuevoMov:'Novo movimento', tipo:'Tipo', ingreso:'Receita', gasto:'Despesa', categoria:'Categoria', monto:'Valor', deQuien:'De quem?', juntos:'Juntos', descripcion:'Descrição', fecha:'Data', ingresoFijo:'Receita fixa — confirmada mensalmente', agregar:'Adicionar',
+    estesMesLabel:'Este mês', sinMovimientos:'Sem movimentos este mês',
+    historialCompleto:'Histórico completo', buscar:'Buscar...', todosMeses:'Todos os meses', todos:'Todos', ingresos:'Receitas', gastos2:'Despesas',
+    gastosCat:'Despesas por categoria', balanceMes:'Balanço mensal', porPersona:'Por pessoa', sinDatos:'Sem dados',
+    subDeudas:'Dívidas', subAhorros:'Poupanças', subMetas:'Metas',
+    regDeuda:'Registrar dívida', quienDebe:'Quem deve?', acreedor:'Credor', total:'Total ($)', cuotaMensual:'Parcela mensal ($)', vencimiento:'Vencimento', sinDeudas:'Sem dívidas',
+    regAhorro:'Registrar poupança', quienAhorra:'Quem poupa?', paraQue:'Para quê', sinAhorros:'Sem poupanças', totalAhorrado:'Total poupado',
+    nuevaMeta:'Nova meta', nombre:'Nome', objetivo:'Objetivo ($)', ahorradoYa:'Já poupado ($)', metaFecha:'Prazo', emoji:'Emoji', crearMeta:'Criar meta', sinMetas:'Sem metas', abonar:'Abonar',
+    nuevaEntrada:'Nova entrada no diário', estadoAnimo:'Humor financeiro', notaDia:'Nota do dia', notaPlaceholder:'Como estão as finanças hoje?', guardarEntrada:'Salvar entrada', sinEntradas:'Sem entradas ainda',
+    limiteMensual:'Limite mensal por categoria', guardarLimites:'Salvar limites', seguimientoMes:'Acompanhamento deste mês', sinLimites:'', distribucionDe:'DIVISÃO DE',
+    agregarFijo:'Adicionar custo fixo', diaMes:'Dia do mês', sinFijos:'Sem custos fixos',
+    calcDivision:'Calculadora de divisão', gastoADividir:'Total a dividir ($)', tipoDivision:'Tipo de divisão', division5050:'50/50 — Partes iguais', divisionProp:'Proporcional à receita', divisionManual:'Manual (percentagem)',
+    ajustes:'Ajustes', personasTab:'Pessoas', aparienciaTab:'Aparência', pantallaTab:'Ecrã', sonidoTab:'Som', notifsTab:'Notifs', formatoTab:'Formato', categoriasTab:'Categorias', sheetsTab:'Sheets',
+    tuNombre:'Seu nome', nombrePareja:'Nome do parceiro(a)', guardarAjustes:'Salvar ajustes', cancelar:'Cancelar',
+    tarjetasResumen:'Cartões do resumo', seccionesTabs:'Secções / Separadores', frasesCoste:'Dicas diárias', mostrarFrases:'Mostrar dicas', velocidadRotacion:'Velocidade de rotação', barraConsejos:'A barra de dicas no topo', siempreVisible:'Sempre visível',
+    cada10:'A cada 10 seg', cada18:'A cada 18 seg', cada30:'A cada 30 seg', cada1min:'A cada 1 min', soloAlAbrir:'Só ao abrir',
+    sonidosActivados:'Sons ativados', feedbackAudio:'Feedback de áudio ao registar', volumen:'Volume',
+    notifsDeudas:'Notificações de dívidas', avisoVencimiento:'Aviso quando uma dívida vence', diasAnticipacion:'Dias de antecedência',
+    dias3:'3 dias antes', dias5:'5 dias antes', dias7:'7 dias antes', dias15:'15 dias antes',
+    moneda:'Moeda', formatoFecha:'Formato de data', idioma:'Idioma',
+    categoriaActuales:'Categorias atuais', nuevaCategoria:'Nova categoria...', agregarBtn:'+ Adicionar', noEliminarDefault:'As categorias predefinidas não podem ser eliminadas.',
+    configGuardada:'Ajustes guardados ✓', ingresoRegistrado:'Receita registada ✓', gastoRegistrado:'Despesa registada ✓', fijosMarcado:' · Fixo',
+    movEliminado:'Movimento eliminado', movActualizado:'Movimento atualizado ✓',
+    deudaRegistrada:'Dívida registada ✓', deudaEliminada:'Dívida eliminada', pagoRegistrado:'Pagamento registado ✓', deudaSaldada:'Dívida saldada! 🎉',
+    ahorroRegistrado:'Poupança registada ✓', ahorroEliminado:'Poupança eliminada',
+    metaCreada:'Meta criada ✓', metaEliminada:'Meta eliminada', abonoRegistrado:'Abono registado ✓', metaLograda:'Meta alcançada! 🎉',
+    entradaGuardada:'Entrada guardada ✓', limitesGuardados:'Limites guardados ✓', fijoAgregado:'Custo fixo adicionado ✓', fijoEliminado:'Custo fixo eliminado',
+    catAgregada:'Categoria adicionada ✓', catEliminada:'Categoria eliminada', catExiste:'Essa categoria já existe',
+    montoValido:'Insira um valor válido', faltaFecha:'Data obrigatória', faltaMonto:'Insira o valor', quienLeDebe:'Quem é o credor?',
+    faltaNombreMeta:'Dê um nome à meta', faltaObjetivo:'Valor objetivo obrigatório', escribeNota:'Escreva algo na nota', completaNombreMonta:'Complete nome e valor',
+    ingresosFijosConfirmados:'Receitas fixas confirmadas ✓',
+    pagar:'Pagar', pagoA:'Pagamento a',
+    ingresosEstesMes:'Receitas —', loQueEntro:'O que entrou este mês', totalEstesMes:'Total este mês', sobranteAnterior:'+ Saldo anterior', disponibleBruto:'= Disponível bruto', cerrar:'Fechar',
+    editarMov:'Editar movimento', guardarCambios:'Guardar alterações',
+    verLogo:'— pré-visualização do logo', pagado:'% pago', cuota:'parcela', ahorrado:'Poupado', falta:'Falta', sinRegistros:'Sem registos', ingFijo:'fixo',
+    porcentajeDe:'% do limite', pasado:'— ⚠️ acima do orçamento',
+  },
+
+  fr: {
+    appSub:'Finances', configBtn:'⚙ Réglages', syncOk:'Sync ✓', syncLoading:'Sync…', syncErr:'Erreur', syncLocal:'Local',
+    tabs:{ movimientos:'Mouvements', historial:'Historique', estadisticas:'Statistiques', finanzas:'Dettes & plus', diario:'Journal', presupuesto:'Budget', fijos:'Charges fixes', division:'Partage' },
+    hero:{ disponible:'Disponible', ingresos:'Revenus', gastos:'Dépenses', comprometido:'Engagé', estesMes:'ce mois', acumulado:'total · voir mois →', ahorrosCuotas:'épargne + mensualités' },
+    arribaronFijos:'Les revenus fixes sont-ils arrivés ?', confirmar:'Confirmer', sobranteMes:'Solde du mois précédent',
+    nuevoMov:'Nouveau mouvement', tipo:'Type', ingreso:'Revenu', gasto:'Dépense', categoria:'Catégorie', monto:'Montant', deQuien:'De qui ?', juntos:'Ensemble', descripcion:'Description', fecha:'Date', ingresoFijo:'Revenu fixe — confirmé chaque mois', agregar:'Ajouter',
+    estesMesLabel:'Ce mois', sinMovimientos:'Aucun mouvement ce mois',
+    historialCompleto:'Historique complet', buscar:'Chercher...', todosMeses:'Tous les mois', todos:'Tous', ingresos:'Revenus', gastos2:'Dépenses',
+    gastosCat:'Dépenses par catégorie', balanceMes:'Bilan mensuel', porPersona:'Par personne', sinDatos:'Aucune donnée',
+    subDeudas:'Dettes', subAhorros:'Épargne', subMetas:'Objectifs',
+    regDeuda:'Enregistrer une dette', quienDebe:'Qui doit ?', acreedor:'Créancier', total:'Total ($)', cuotaMensual:'Mensualité ($)', vencimiento:'Échéance', sinDeudas:'Aucune dette',
+    regAhorro:"Enregistrer l'épargne", quienAhorra:'Qui épargne ?', paraQue:'Pour quoi', sinAhorros:'Aucune épargne', totalAhorrado:'Total épargné',
+    nuevaMeta:'Nouvel objectif', nombre:'Nom', objetivo:'Objectif ($)', ahorradoYa:'Déjà épargné ($)', metaFecha:'Date limite', emoji:'Emoji', crearMeta:"Créer l'objectif", sinMetas:'Aucun objectif', abonar:'Ajouter',
+    nuevaEntrada:'Nouvelle entrée de journal', estadoAnimo:'Humeur financière', notaDia:'Note du jour', notaPlaceholder:'Comment vont les finances ?', guardarEntrada:"Sauvegarder l'entrée", sinEntradas:'Aucune entrée',
+    limiteMensual:'Limite mensuelle par catégorie', guardarLimites:'Sauvegarder les limites', seguimientoMes:'Suivi ce mois', sinLimites:'', distribucionDe:'PARTAGE DE',
+    agregarFijo:'Ajouter une charge fixe', diaMes:'Jour du mois', sinFijos:'Aucune charge fixe',
+    calcDivision:'Calculateur de partage', gastoADividir:'Total à partager ($)', tipoDivision:'Type de partage', division5050:'50/50 — Parts égales', divisionProp:'Proportionnel aux revenus', divisionManual:'Manuel (pourcentage)',
+    ajustes:'Réglages', personasTab:'Personnes', aparienciaTab:'Apparence', pantallaTab:'Affichage', sonidoTab:'Son', notifsTab:'Notifs', formatoTab:'Format', categoriasTab:'Catégories', sheetsTab:'Sheets',
+    tuNombre:'Votre nom', nombrePareja:'Nom du/de la partenaire', guardarAjustes:'Sauvegarder', cancelar:'Annuler',
+    tarjetasResumen:'Cartes du résumé', seccionesTabs:'Sections / Onglets', frasesCoste:'Conseils quotidiens', mostrarFrases:'Afficher les conseils', velocidadRotacion:'Vitesse de rotation', barraConsejos:'La barre de conseils en haut', siempreVisible:'Toujours visible',
+    cada10:'Toutes les 10 sec', cada18:'Toutes les 18 sec', cada30:'Toutes les 30 sec', cada1min:'Toutes les 1 min', soloAlAbrir:"À l'ouverture seulement",
+    sonidosActivados:'Sons activés', feedbackAudio:'Retour audio lors de la saisie', volumen:'Volume',
+    notifsDeudas:'Notifications de dettes', avisoVencimiento:"Alerte quand une dette est proche de l'échéance", diasAnticipacion:"Jours d'avance",
+    dias3:'3 jours avant', dias5:'5 jours avant', dias7:'7 jours avant', dias15:'15 jours avant',
+    moneda:'Devise', formatoFecha:'Format de date', idioma:'Langue',
+    categoriaActuales:'Catégories actuelles', nuevaCategoria:'Nouvelle catégorie...', agregarBtn:'+ Ajouter', noEliminarDefault:'Les catégories par défaut ne peuvent pas être supprimées.',
+    configGuardada:'Réglages sauvegardés ✓', ingresoRegistrado:'Revenu enregistré ✓', gastoRegistrado:'Dépense enregistrée ✓', fijosMarcado:' · Fixe',
+    movEliminado:'Mouvement supprimé', movActualizado:'Mouvement mis à jour ✓',
+    deudaRegistrada:'Dette enregistrée ✓', deudaEliminada:'Dette supprimée', pagoRegistrado:'Paiement enregistré ✓', deudaSaldada:'Dette soldée ! 🎉',
+    ahorroRegistrado:'Épargne enregistrée ✓', ahorroEliminado:'Épargne supprimée',
+    metaCreada:'Objectif créé ✓', metaEliminada:'Objectif supprimé', abonoRegistrado:'Versement enregistré ✓', metaLograda:'Objectif atteint ! 🎉',
+    entradaGuardada:'Entrée sauvegardée ✓', limitesGuardados:'Limites sauvegardées ✓', fijoAgregado:'Charge fixe ajoutée ✓', fijoEliminado:'Charge fixe supprimée',
+    catAgregada:'Catégorie ajoutée ✓', catEliminada:'Catégorie supprimée', catExiste:'Cette catégorie existe déjà',
+    montoValido:'Entrez un montant valide', faltaFecha:'Date requise', faltaMonto:'Entrez le montant', quienLeDebe:'Qui est le créancier ?',
+    faltaNombreMeta:"Donnez un nom à l'objectif", faltaObjetivo:'Montant cible requis', escribeNota:'Écrivez quelque chose', completaNombreMonto:'Complétez le nom et le montant',
+    ingresosFijosConfirmados:'Revenus fixes confirmés ✓',
+    pagar:'Payer', pagoA:'Paiement à',
+    ingresosEstesMes:'Revenus —', loQueEntro:'Ce qui est entré ce mois', totalEstesMes:'Total ce mois', sobranteAnterior:'+ Solde précédent', disponibleBruto:'= Disponible brut', cerrar:'Fermer',
+    editarMov:'Modifier le mouvement', guardarCambios:'Sauvegarder les modifications',
+    verLogo:'— aperçu du logo', pagado:'% payé', cuota:'mensualité', ahorrado:'Épargné', falta:'Reste', sinRegistros:'Aucun enregistrement', ingFijo:'fixe',
+    porcentajeDe:'% de la limite', pasado:'— ⚠️ dépassé',
+  }
+};
+
+// ── CATEGORY GROUPS ──
+const CAT_GROUPS = {
+  es: [
+    { group:'💼 Ingresos',      cats:['Salario/Nómina','Freelance','Negocio','Arriendo cobrado','Bono/Extra','Otros ingresos'] },
+    { group:'🏠 Hogar',         cats:['Arriendo pagado','Servicios','Mercado','Mantenimiento hogar','Internet/Streaming'] },
+    { group:'🍽 Comida',        cats:['Comida','Restaurante','Domicilios','Cafetería'] },
+    { group:'🚌 Transporte',    cats:['Transporte','Gasolina','Parqueadero','Viajes','Uber/Taxi'] },
+    { group:'🎉 Ocio',          cats:['Entretenimiento','Salidas','Ropa','Viajes de placer','Suscripciones'] },
+    { group:'💊 Salud',         cats:['Salud','Medicamentos','Gimnasio','Seguro médico'] },
+    { group:'📚 Educación',     cats:['Educación','Cursos','Libros'] },
+    { group:'🔴 Deudas',        cats:['Deuda','Tarjeta de crédito','Préstamo'] },
+    { group:'📦 Otros',         cats:['Otros'] },
+  ],
+  en: [
+    { group:'💼 Income',        cats:['Salary','Freelance','Business','Rent received','Bonus/Extra','Other income'] },
+    { group:'🏠 Home',          cats:['Rent paid','Utilities','Groceries','Home maintenance','Internet/Streaming'] },
+    { group:'🍽 Food',          cats:['Food','Restaurant','Delivery','Café'] },
+    { group:'🚌 Transport',     cats:['Transport','Gas','Parking','Travel','Uber/Taxi'] },
+    { group:'🎉 Leisure',       cats:['Entertainment','Outings','Clothing','Vacations','Subscriptions'] },
+    { group:'💊 Health',        cats:['Health','Medication','Gym','Health insurance'] },
+    { group:'📚 Education',     cats:['Education','Courses','Books'] },
+    { group:'🔴 Debts',         cats:['Debt','Credit card','Loan'] },
+    { group:'📦 Other',         cats:['Other'] },
+  ],
+  pt: [
+    { group:'💼 Receitas',      cats:['Salário','Freelance','Negócio','Renda recebida','Bônus/Extra','Outras receitas'] },
+    { group:'🏠 Casa',          cats:['Aluguel pago','Serviços','Supermercado','Manutenção','Internet/Streaming'] },
+    { group:'🍽 Alimentação',   cats:['Alimentação','Restaurante','Delivery','Cafeteria'] },
+    { group:'🚌 Transporte',    cats:['Transporte','Gasolina','Estacionamento','Viagens','Uber/Taxi'] },
+    { group:'🎉 Lazer',         cats:['Entretenimento','Saídas','Roupas','Férias','Assinaturas'] },
+    { group:'💊 Saúde',         cats:['Saúde','Medicamentos','Academia','Plano de saúde'] },
+    { group:'📚 Educação',      cats:['Educação','Cursos','Livros'] },
+    { group:'🔴 Dívidas',       cats:['Dívida','Cartão de crédito','Empréstimo'] },
+    { group:'📦 Outros',        cats:['Outros'] },
+  ],
+  fr: [
+    { group:'💼 Revenus',       cats:['Salaire','Freelance','Entreprise','Loyer perçu','Prime/Extra','Autres revenus'] },
+    { group:'🏠 Maison',        cats:['Loyer payé','Charges','Courses','Entretien','Internet/Streaming'] },
+    { group:'🍽 Alimentation',  cats:['Alimentation','Restaurant','Livraison','Café'] },
+    { group:'🚌 Transport',     cats:['Transport','Carburant','Parking','Voyages','Uber/Taxi'] },
+    { group:'🎉 Loisirs',       cats:['Divertissement','Sorties','Vêtements','Vacances','Abonnements'] },
+    { group:'💊 Santé',         cats:['Santé','Médicaments','Salle de sport','Assurance santé'] },
+    { group:'📚 Éducation',     cats:['Éducation','Cours','Livres'] },
+    { group:'🔴 Dettes',        cats:['Dette','Carte de crédit','Prêt'] },
+    { group:'📦 Autres',        cats:['Autres'] },
+  ],
+};
+
+// ── T() — get translation ──
+function t(key) {
+  const lang = S.cfg.idioma || 'es';
+  const d = I18N[lang] || I18N.es;
+  return key.split('.').reduce((o,k)=>o?.[k], d) ?? (I18N.es[key] ?? key);
+}
+
+// ── Apply language to full UI ──
+function applyLang() {
+  const lang = S.cfg.idioma || 'es';
+  document.documentElement.lang = lang;
+  document.title = `K&R — ${t('appSub')}`;
+
+  // Header
+  const sub = document.querySelector('.logo-sub');
+  if(sub) sub.textContent = t('appSub');
+  const cfgBtn = document.querySelector('.btn-cfg');
+  if(cfgBtn) cfgBtn.textContent = t('configBtn');
+
+  // Frase strip label (icon stays)
+  // Hero cards — rebuild
+  buildHero();
+
+  // Nav tabs — rebuild
+  buildNavTabs();
+
+  // Personas "Juntos"
+  document.querySelectorAll('option[value="juntos"]').forEach(el => el.textContent = t('juntos'));
+
+  // Sub tabs
+  const stD=document.getElementById('stDeudas'), stA=document.getElementById('stAhorros'), stM=document.getElementById('stMetas');
+  if(stD) stD.textContent = t('subDeudas');
+  if(stA) stA.textContent = t('subAhorros');
+  if(stM) stM.textContent = t('subMetas');
+
+  // Form labels — update via data-i18n attributes
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = t(key);
+    if(el.tagName === 'LABEL') el.textContent = val;
+    else if(el.tagName === 'BUTTON') el.textContent = val;
+    else if(el.tagName === 'INPUT') el.placeholder = val;
+    else if(el.tagName === 'OPTION') el.textContent = val;
+    else el.textContent = val;
+  });
+
+  // Dynamic selects with groups
+  fillCatSelects();
+
+  // Sync label
+  setSS(document.getElementById('syncDot').className.replace('sync-dot','').trim() || 'local');
+
+  // Re-render visible panels
+  renderMovMes();
+  renderHist();
+}
+
+// ── Get flat cats for current lang ──
+function getCatGroups() {
+  const lang = S.cfg.idioma || 'es';
+  return CAT_GROUPS[lang] || CAT_GROUPS.es;
+}
+
+// ── Override getCats to use lang groups + custom ──
+function getCats() {
+  const groups = getCatGroups();
+  const base = groups.flatMap(g => g.cats);
+  return [...base, ...(S.cfg.catsCustom||[])].filter((v,i,a)=>a.indexOf(v)===i);
+}
+
+// ── Fill cat selects with optgroups ──
+function fillCatSelects() {
+  const groups = getCatGroups();
+  const custom = S.cfg.catsCustom || [];
+
+  const buildOptions = (curVal) => {
+    let html = groups.map(g =>
+      `<optgroup label="${g.group}">${g.cats.map(c=>`<option value="${c}"${c===curVal?' selected':''}>${c}</option>`).join('')}</optgroup>`
+    ).join('');
+    if(custom.length) {
+      html += `<optgroup label="✏️ ${t('categoriasTab')}">${custom.map(c=>`<option value="${c}"${c===curVal?' selected':''}>${c}</option>`).join('')}</optgroup>`;
+    }
+    return html;
+  };
+
+  ['mv-cat','gf-cat','edit-cat'].forEach(id => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    const cur = el.value;
+    el.innerHTML = buildOptions(cur);
+  });
+}
+
+// ── Override CATS_DEFAULT with current lang cats ──
+function isCatDefault(c) {
+  return getCatGroups().flatMap(g=>g.cats).includes(c);
+}
+
+
+// ══════════════════════════════════════════════════════
+//  FORMATEADOR DE MONTOS — puntos automáticos
+// ══════════════════════════════════════════════════════
+function formatMoneyInput(val) {
+  // Quitar todo excepto dígitos
+  const raw = String(val).replace(/[^\d]/g, '');
+  if (!raw) return '';
+  // Agregar separador de miles según moneda
+  const sep = ['COP','MXN','ARS'].includes(S.cfg.moneda||'COP') ? '.' : ',';
+  return raw.replace(/\B(?=(\d{3})+(?!\d))/g, sep);
+}
+
+function parseMoneyInput(val) {
+  // Quitar separadores de miles y obtener número
+  return parseFloat(String(val).replace(/[.,]/g, '').replace(/[^\d]/g, '')) || 0;
+}
+
+function onMoneyInput(el) {
+  const pos = el.selectionStart;
+  const lenBefore = el.value.length;
+  const raw = el.value.replace(/[^\d]/g, '');
+  const formatted = formatMoneyInput(raw);
+  el.value = formatted;
+  // Reposicionar cursor
+  const diff = formatted.length - lenBefore;
+  try { el.setSelectionRange(pos + diff, pos + diff); } catch(e) {}
+}
+
+function initMoneyInputs() {
+  document.querySelectorAll('[data-money="true"]').forEach(el => {
+    el.addEventListener('input', function() { onMoneyInput(this); });
+    el.addEventListener('focus', function() {
+      // Al enfocar, mostrar sin formato si está en 0
+      if(this.value === '0') this.value = '';
+    });
+    el.addEventListener('blur', function() {
+      // Al salir, reformatear
+      const raw = this.value.replace(/[^\d]/g, '');
+      this.value = raw ? formatMoneyInput(raw) : '';
+    });
+  });
+}
+
+
+
+function getMoneyVal(id) {
+  return parseMoneyInput(document.getElementById(id)?.value || '0');
+}
+
+function setMoneyVal(id, val) {
+  const el = document.getElementById(id);
+  if(el) el.value = val ? formatMoneyInput(String(Math.round(val))) : '';
+}
+
 </script>
 </body>
 </html>
