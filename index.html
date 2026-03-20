@@ -37,7 +37,7 @@ header{background:var(--surface);border-bottom:1px solid var(--border);padding:0
 .sync-dot{width:6px;height:6px;border-radius:50%;background:var(--muted2);}
 .sync-dot.ok{background:var(--green);}.sync-dot.err{background:var(--red);}.sync-dot.loading{background:var(--amber);animation:pulse .9s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.btn-cfg{background:var(--bg);border:1px solid var(--border);color:var(--text2);border-radius:8px;padding:6px 13px;font-family:'DM Sans';font-size:.8rem;font-weight:600;cursor:pointer;transition:all .15s;}
+.btn-cfg{background:var(--bg);border:1px solid var(--border);color:var(--text2);border-radius:8px;padding:8px 16px;font-family:'DM Sans';font-size:.8rem;font-weight:600;cursor:pointer;transition:all .15s;min-height:40px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 .btn-cfg:hover{background:var(--border);}
 
 /* ══ FRASE ══ */
@@ -204,9 +204,10 @@ tbody tr:hover td{background:var(--bg);}
 .div-val{font-family:'DM Mono';font-weight:500;color:var(--accent);}
 
 /* ══ CONFIG MODAL ══ */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);z-index:500;align-items:flex-end;justify-content:center;padding:0;}@media(min-width:600px){.overlay{align-items:center;padding:16px;}}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;align-items:flex-end;justify-content:center;padding:0;-webkit-tap-highlight-color:transparent;}
+@media(min-width:600px){.overlay{align-items:center;padding:16px;}}
 .overlay.open{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:18px 18px 0 0;padding:20px 20px 32px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,.18);animation:slideUp .25s ease;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:18px 18px 0 0;padding:20px 20px 32px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,.18);animation:slideUp .25s ease;-webkit-overflow-scrolling:touch;}
 @media(min-width:600px){.modal{border-radius:18px;padding:24px;max-width:540px;max-height:92vh;animation:fadeUp .2s ease;}}
 @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
 .modal::before{content:'';display:block;width:36px;height:4px;background:var(--muted2);border-radius:2px;margin:0 auto 16px;cursor:grab;}
@@ -738,9 +739,15 @@ tbody tr:hover td{background:var(--bg);}
 // ══════════════════════════════════
 //  FRASES
 // ══════════════════════════════════
-const FRASES=["El que no lleva sus cuentas, termina contando monedas pa' el bus 🚌","Un peso ahorrado hoy es una tranquilidad segura mañana 🌤","Las deudas son como el sol del mediodía: queman sin pedir permiso ☀️","Anota todo, que la memoria falla pero las deudas no se olvidan 📝","El que gasta sin saber cuánto tiene, llega a fin de mes rezando 🙏","Ponle fecha a tus metas o se quedan en sueños de carnaval 🎭","El interés de una deuda no descansa, ni en semana santa 😅","Los zapatos bonitos no pagan el arriendo. El ahorro sí 👠","No es ser amarrado, es ser inteligente, parce 🧠","Un fondo de emergencia es raro hasta que la nevera se daña un viernes 🧊","Si los dos no cuadran la plata, van a pelear más que el tráfico en hora pico 🚗","El que debe y no paga, no duerme tranquilo ni con brisa fresca 🌊","Comparar precios no es tacañería, es sabiduría de gente vivida 💡","Invertir en aprender siempre da ganancias, eso no lo roba nadie 📚","Registra cada peso antes de que se vaya solo, porque sí se va solo 💨","Una meta sin ahorro es un paseo sin tiquete de regreso 🎟","El que no planea sus finanzas, planea tener problemas 💯","El dinero disponible de hoy es la tranquilidad de mañana 🏖️","Cuenta la plata que te llega, no la que esperas que llegue 🤝","Entre los dos todo carga menos, incluyendo las deudas 👫"];
+const FRASES_DICT = {
+  es: ["El que no lleva sus cuentas, termina contando monedas pa' el bus 🚌","Un peso ahorrado hoy es una tranquilidad segura mañana 🌤","Las deudas son como el sol del mediodía: queman sin pedir permiso ☀️","Anota todo, que la memoria falla pero las deudas no se olvidan 📝","El que gasta sin saber cuánto tiene, llega a fin de mes rezando 🙏","Ponle fecha a tus metas o se quedan en sueños de carnaval 🎭","El interés de una deuda no descansa, ni en semana santa 😅","Los zapatos bonitos no pagan el arriendo. El ahorro sí 👠","No es ser amarrado, es ser inteligente, parce 🧠","Un fondo de emergencia es raro hasta que la nevera se daña un viernes 🧊","Si los dos no cuadran la plata, van a pelear más que el tráfico en hora pico 🚗","El que debe y no paga, no duerme tranquilo ni con brisa fresca 🌊","Comparar precios no es tacañería, es sabiduría de gente vivida 💡","Invertir en aprender siempre da ganancias, eso no lo roba nadie 📚","Registra cada peso antes de que se vaya solo, porque sí se va solo 💨","Una meta sin ahorro es un paseo sin tiquete de regreso 🎟","El que no planea sus finanzas, planea tener problemas 💯","El dinero disponible de hoy es la tranquilidad de mañana 🏖️","Cuenta la plata que te llega, no la que esperas que llegue 🤝","Entre los dos todo carga menos, incluyendo las deudas 👫"],
+  en: ["Track your money or it'll track you out of your wallet 💸","A peso saved today is a cold drink secured tomorrow 🍺","Debt is like a sunburn — you barely feel it until it's too late ☀️","Write it down. Memory fails, but debt doesn't forget 📝","Spending without knowing your balance is flying blind 🙈","Set a deadline for your goals or they're just daydreams 🎯","Interest never takes a day off, not even on holidays 😅","Nice shoes won't pay the rent. Your savings will 👠","Budgeting isn't being cheap, it's being smart 🧠","An emergency fund is boring until everything breaks on a Friday 🧊","When two people don't align on money, they argue about everything else 🚗","Debt unpaid costs more than money — it costs peace of mind 🌊","Comparing prices isn't stingy, it's wise 💡","Investing in yourself always pays the best return 📚","Log every expense before it sneaks away — it will sneak away 💨","A goal without savings is a wish without a plan 🎟","Failing to plan your finances is planning to fail 💯","Today's available balance is tomorrow's peace of mind 🏖️","Count what arrives, not what you hope will arrive 🤝","Together you carry every weight lighter, debts included 👫"],
+  pt: ["Quem não controla o dinheiro, o dinheiro controla ele 💸","Um real poupado hoje é uma segurança garantida amanhã 🌤","A dívida é como o sol do meio-dia: queima sem pedir licença ☀️","Anote tudo, porque a memória falha mas as dívidas não esquecem 📝","Gastar sem saber o saldo é como dirigir de olhos fechados 🙈","Coloque uma data nas suas metas ou elas ficam só em sonhos 🎯","Os juros não tiram folga, nem no fim de semana 😅","Sapatos bonitos não pagam o aluguel. A poupança sim 👠","Poupar não é ser mão-fechada, é ser inteligente 🧠","O fundo de emergência parece inútil até a geladeira quebrar numa sexta 🧊","Quando o casal não alinha as finanças, briga por tudo 🚗","Quem deve e não paga, não dorme tranquilo 🌊","Comparar preços não é mesquinhez, é sabedoria 💡","Investir em conhecimento sempre tem o melhor retorno 📚","Registre cada gasto antes que ele suma sozinho — e ele some 💨","Meta sem poupança é desejo sem plano 🎟","Quem não planeja as finanças, planeia ter problemas 💯","O dinheiro disponível hoje é a tranquilidade de amanhã 🏖️","Conte o que chega, não o que espera que chegue 🤝","Juntos tudo pesa menos, inclusive as dívidas 👫"],
+  fr: ["Celui qui ne suit pas ses dépenses finit à court d'argent 💸","Un euro épargné aujourd'hui, c'est une sérénité garantie demain 🌤","La dette est comme le soleil de midi : elle brûle sans prévenir ☀️","Notez tout, la mémoire flanche mais les dettes non 📝","Dépenser sans connaître son solde, c'est naviguer à l'aveugle 🙈","Fixez une date à vos objectifs ou ils resteront des rêves 🎯","Les intérêts ne prennent jamais de vacances 😅","De belles chaussures ne paient pas le loyer. Votre épargne, oui 👠","Budgétiser n'est pas être radin, c'est être intelligent 🧠","Un fonds d'urgence semble inutile jusqu'au jour où tout tombe en panne un vendredi 🧊","Quand un couple ne s'aligne pas sur l'argent, il se dispute sur tout 🚗","Une dette non payée coûte plus qu'en argent 🌊","Comparer les prix n'est pas de l'avarice, c'est de la sagesse 💡","Investir dans la connaissance rapporte toujours le meilleur retour 📚","Enregistrez chaque dépense avant qu'elle ne disparaisse — et elle disparaît 💨","Un objectif sans épargne est un vœu sans plan 🎟","Ne pas planifier ses finances, c'est planifier d'avoir des problèmes 💯","L'argent disponible aujourd'hui, c'est la tranquillité de demain 🏖️","Comptez ce qui arrive, pas ce que vous espérez voir arriver 🤝","Ensemble, tout pèse moins lourd, les dettes incluses 👫"],
+};
+function getFrases(){ return FRASES_DICT[S.cfg.idioma||'es'] || FRASES_DICT.es; }
 let fi=parseInt(localStorage.getItem('kr_fi')||'0'),fraseTimer=null;
-function showFrase(anim=false){const el=document.getElementById('fraseTexto');if(anim)el.classList.add('fade');setTimeout(()=>{el.textContent=FRASES[fi%FRASES.length];el.classList.remove('fade');},anim?350:0);localStorage.setItem('kr_fi',fi);}
+function showFrase(anim=false){const el=document.getElementById('fraseTexto');if(anim)el.classList.add('fade');const frases=getFrases();setTimeout(()=>{el.textContent=frases[fi%frases.length];el.classList.remove('fade');},anim?350:0);localStorage.setItem('kr_fi',fi);}
 function startFrases(){clearInterval(fraseTimer);const seg=S.cfg.fraseSeg||18;if(!seg)return;fraseTimer=setInterval(()=>{fi=(fi+1)%FRASES.length;showFrase(true);},seg*1000);}
 
 // ══════════════════════════════════
@@ -1202,7 +1209,50 @@ function renderHist(){
   if(q)items=items.filter(m=>(m.desc||'').toLowerCase().includes(q)||(m.cat||'').toLowerCase().includes(q)||N(m.persona).toLowerCase().includes(q));
   const tbody=document.getElementById('tbHist'),empty=document.getElementById('histEmpty');
   if(!items.length){tbody.innerHTML='';empty.style.display='block';return;}empty.style.display='none';
-  tbody.innerHTML=items.map(m=>`<tr><td class="muted" style="font-size:.74rem;">${fmtFecha(m.fecha)}</td><td><span class="badge ${m.tipo==='ingreso'?'b-ing':'b-gas'}">${m.tipo==='ingreso'?'Ing':'Gas'}</span>${m.fijo?'<span class="badge b-fij" style="margin-left:3px">F</span>':''}</td><td style="font-weight:600;">${m.cat}</td><td class="muted">${m.desc||'—'}</td><td style="font-size:.78rem;">${N(m.persona)}</td><td class="mono" style="text-align:right;font-weight:500;color:${m.tipo==='ingreso'?'var(--green)':'var(--red)'};">${m.tipo==='ingreso'?'+':'-'}${fmt(m.monto)}</td><td><div class="td-act"><button class="btn-icon edit" onclick="openEdit(${m.id})">✏️</button><button class="btn-icon del" onclick="delMov(${m.id})">🗑</button></div></td></tr>`).join('');
+  tbody.innerHTML=items.map(m=>`
+    <tr>
+      <td class="muted" style="font-size:.74rem;white-space:nowrap;">${fmtFecha(m.fecha)}</td>
+      <td>
+        <span class="badge ${m.tipo==='ingreso'?'b-ing':'b-gas'}">${m.tipo==='ingreso'?t('ingreso'):t('gasto')}</span>
+        ${m.fijo?`<span class="badge b-fij" style="margin-left:3px">${t('ingFijo')}</span>`:''}
+      </td>
+      <td style="font-weight:600;">${m.cat}</td>
+      <td class="muted" style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${m.desc||'—'}</td>
+      <td style="font-size:.78rem;white-space:nowrap;">${N(m.persona)}</td>
+      <td class="mono" style="text-align:right;font-weight:500;white-space:nowrap;color:${m.tipo==='ingreso'?'var(--green)':'var(--red)'};">
+        ${m.tipo==='ingreso'?'+':'-'}${fmt(m.monto)}
+      </td>
+      <td>
+        <div class="td-act">
+          <button class="btn-icon edit" onclick="openEdit(${m.id})" title="${t('editarMov')}">✏️</button>
+          <button class="btn-icon del" onclick="delMovConfirm(${m.id})" title="${t('movEliminado')}">🗑</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function delMovConfirm(id){
+  const m=S.movimientos.find(m=>m.id===id);
+  if(!m)return;
+  // Show inline confirm instead of browser confirm (better mobile UX)
+  const row = document.querySelector(`button[onclick="delMovConfirm(${id})"]`)?.closest('tr');
+  if(!row)return delMov(id);
+  // Check if already in confirm state
+  if(row.dataset.confirming){
+    delMov(id);
+    return;
+  }
+  row.dataset.confirming='1';
+  row.style.background='var(--redBg)';
+  const btn=row.querySelector('.btn-icon.del');
+  if(btn){btn.textContent='✓';btn.style.color='var(--red)';btn.style.fontWeight='700';}
+  setTimeout(()=>{
+    if(row.dataset.confirming){
+      delete row.dataset.confirming;
+      row.style.background='';
+      if(btn){btn.textContent='🗑';btn.style.color='';btn.style.fontWeight='';}
+    }
+  },2500);
 }
 
 // ══════════════════════════════════
@@ -1394,7 +1444,7 @@ window.onload=()=>{
 
   // Frase
   const lastOpen=localStorage.getItem('kr_lo')||'';
-  if(lastOpen!==hoy){fi=Math.floor(Math.random()*FRASES.length);localStorage.setItem('kr_lo',hoy);}
+  if(lastOpen!==hoy){fi=Math.floor(Math.random()*getFrases().length);localStorage.setItem('kr_lo',hoy);}
   document.getElementById('fraseStrip').style.display=S.cfg.frases!==false?'flex':'none';
   showFrase();startFrases();
 
@@ -1669,7 +1719,7 @@ function t(key) {
 function applyLang() {
   const lang = S.cfg.idioma || 'es';
   document.documentElement.lang = lang;
-  document.title = `K&R — ${t('appSub')}`;
+  document.title = 'K&R — ' + t('appSub');
 
   // Header
   const sub = document.querySelector('.logo-sub');
@@ -1677,15 +1727,9 @@ function applyLang() {
   const cfgBtn = document.querySelector('.btn-cfg');
   if(cfgBtn) cfgBtn.textContent = t('configBtn');
 
-  // Frase strip label (icon stays)
-  // Hero cards — rebuild
+  // Hero & nav rebuild
   buildHero();
-
-  // Nav tabs — rebuild
   buildNavTabs();
-
-  // Personas "Juntos"
-  document.querySelectorAll('option[value="juntos"]').forEach(el => el.textContent = t('juntos'));
 
   // Sub tabs
   const stD=document.getElementById('stDeudas'), stA=document.getElementById('stAhorros'), stM=document.getElementById('stMetas');
@@ -1693,26 +1737,83 @@ function applyLang() {
   if(stA) stA.textContent = t('subAhorros');
   if(stM) stM.textContent = t('subMetas');
 
-  // Form labels — update via data-i18n attributes
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    const val = t(key);
-    if(el.tagName === 'LABEL') el.textContent = val;
-    else if(el.tagName === 'BUTTON') el.textContent = val;
-    else if(el.tagName === 'INPUT') el.placeholder = val;
-    else if(el.tagName === 'OPTION') el.textContent = val;
-    else el.textContent = val;
+  // Juntos options
+  document.querySelectorAll('option[value="juntos"]').forEach(el => el.textContent = t('juntos'));
+
+  // Historial filter tipo
+  const filtroTipo = document.getElementById('filtroTipoH');
+  if(filtroTipo) filtroTipo.innerHTML = '<option value="">'+t('todos')+'</option><option value="ingreso">'+t('ingresos')+'</option><option value="gasto">'+t('gastos2')+'</option>';
+
+  // Historial table headers
+  const thHist = document.querySelectorAll('#panel-historial thead th');
+  const hdrKeys = ['fecha','tipo','categoria','descripcion','deQuien','monto',''];
+  const hdrMap = {fecha:t('fecha'),tipo:t('tipo'),categoria:t('categoria'),descripcion:t('descripcion'),deQuien:t('deQuien'),monto:t('monto')};
+  thHist.forEach((th,i)=>{ if(hdrKeys[i] && hdrMap[hdrKeys[i]]) th.textContent = hdrMap[hdrKeys[i]]; });
+
+  // Buscar placeholder
+  const buscarH = document.getElementById('buscarH');
+  if(buscarH) buscarH.placeholder = t('buscar');
+
+  // Todos los meses
+  ['filtroMesH','filtroMesS'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el && el.options[0]) el.options[0].textContent = t('todosMeses');
   });
 
-  // Dynamic selects with groups
+  // Tipo selects
+  ['mv-tipo','edit-tipo'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el && el.options.length >= 2){ el.options[0].textContent = t('ingreso'); el.options[1].textContent = t('gasto'); }
+  });
+
+  // Banner titles
+  const alTitle = document.querySelector('#alertaMes .banner-title');
+  if(alTitle) alTitle.textContent = t('arribaronFijos');
+  const confBtn = document.querySelector('#alertaMes .btn-confirm');
+  if(confBtn) confBtn.textContent = t('confirmar');
+  const sobTitle = document.querySelector('#sobranteBanner .banner-title');
+  if(sobTitle) sobTitle.textContent = t('sobranteMes');
+
+  // Division select
+  const divTipo = document.getElementById('div-tipo');
+  if(divTipo && divTipo.options.length >= 3){
+    divTipo.options[0].textContent = t('division5050');
+    divTipo.options[1].textContent = t('divisionProp');
+    divTipo.options[2].textContent = t('divisionManual');
+  }
+
+  // Config tab labels
+  const cfgTabKeys = ['personasTab','aparienciaTab','pantallaTab','sonidoTab','notifsTab','formatoTab','categoriasTab','sheetsTab'];
+  document.querySelectorAll('.cfg-tab').forEach((el,i)=>{ if(cfgTabKeys[i]) el.textContent = t(cfgTabKeys[i]); });
+
+  // Config modal save/cancel
+  const guardarBtn = document.querySelector('#cfgOv .btn-primary.btn-full');
+  if(guardarBtn) guardarBtn.textContent = t('guardarAjustes');
+  const cancelarBtn = document.querySelector('#cfgOv .btn-secondary.btn-full');
+  if(cancelarBtn) cancelarBtn.textContent = t('cancelar');
+
+  // Card titles
+  const movCardTitle = document.querySelector('#panel-movimientos .card:first-child .card-title');
+  if(movCardTitle) movCardTitle.textContent = t('nuevoMov');
+  const histCardTitle = document.querySelector('#panel-historial .card .card-title');
+  if(histCardTitle) histCardTitle.textContent = t('historialCompleto');
+
+  // Fill category selects with translated groups
   fillCatSelects();
 
   // Sync label
-  setSS(document.getElementById('syncDot').className.replace('sync-dot','').trim() || 'local');
+  const dotClass = document.getElementById('syncDot').className.replace('sync-dot','').trim();
+  setSS(dotClass || 'local');
 
-  // Re-render visible panels
+  // Refresh frase in new language
+  showFrase(true);
+
+  // Re-render panels to apply translated labels
   renderMovMes();
   renderHist();
+  if(document.getElementById('panel-finanzas')?.classList.contains('active')){
+    renderDeudas(); renderAhorros(); renderMetas();
+  }
 }
 
 // ── Get flat cats for current lang ──
