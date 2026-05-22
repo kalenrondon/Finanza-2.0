@@ -923,7 +923,7 @@ function updateLogo(){sv('li1',(S.cfg.n1||'Kalen').charAt(0).toUpperCase());sv('
 function prevLogo(){var n1=(g('cfgN1')||{}).value||'Kalen',n2=(g('cfgN2')||{}).value||'Rosa';si('prevLogoTxt',n1.charAt(0).toUpperCase()+' <span style="color:var(--mu2);font-weight:300">&amp;</span> '+n2.charAt(0).toUpperCase());}
 function updateNames(){var n1=S.cfg.n1,n2=S.cfg.n2;sv('chipP1',n1);sv('chipP2',n2);['mvop1','dop1','aop1','mtop1','gfop1','eop1'].forEach(function(id){var e=g(id);if(e)e.textContent=n1;});['mvop2','dop2','aop2','mtop2','gfop2','eop2'].forEach(function(id){var e=g(id);if(e)e.textContent=n2;});}
 function setSS(s){var dot=g('sdot'),lbl=g('slbl');if(dot)dot.className='sdot '+(s||'');if(lbl){var map={ok:t('syncOk'),loading:t('syncLoad'),err:t('syncErr')};lbl.textContent=map[s]||t('syncLocal');}}
-async function syncS(a,d){if(!S.cfg.scriptUrl)return null;setSS('loading');try{var r=await fetch(S.cfg.scriptUrl,{method:'POST',mode:'cors',redirect:'follow',headers:{'Content-Type':'text/plain'},body:JSON.stringify({accion:a,datos:d})});var txt=await r.text();var j;try{j=JSON.parse(txt);}catch(e){var m=txt.match(/\{[\s\S]*\}/);if(m)try{j=JSON.parse(m[0]);}catch(e2){}}if(j&&!j.error){setSS('ok');return j;}setSS('err');return null;}catch(e){setSS('err');return null;}}
+async function syncS(a,d){if(!S.cfg.scriptUrl)return null;setSS('loading');try{var r=await fetch(S.cfg.scriptUrl,{method:'POST',redirect:'follow',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'accion='+encodeURIComponent(a)+'&datos='+encodeURIComponent(JSON.stringify(d||{}))});var txt=await r.text();console.log('syncS response:',txt);var j;try{j=JSON.parse(txt);}catch(e){var m=txt.match(/\{[\s\S]*\}/);if(m)try{j=JSON.parse(m[0]);}catch(e2){}}if(j&&!j.error){setSS('ok');return j;}setSS('err');return null;}catch(e){console.error('syncS error:',e);setSS('err');return null;}}
 function buildHero(){
   var vis=S.cfg.heroVisible||{};
   var items=HERO_ITEMS.filter(function(h){return vis[h.id]!==false;});
@@ -1002,9 +1002,9 @@ var esFijo=false;
 function toggleFijoV(){var ft=g('mvTipo');var fr=g('fijoRow');if(fr)fr.style.display=ft&&ft.value==='ingreso'?'flex':'none';}
 function toggleFijoUI(){esFijo=!esFijo;var ft=g('fijoTog');if(ft)ft.classList.toggle('on',esFijo);}
 function agregarMov(){
-  var tipo=(g('mvTipo')||{}).value,cat=(g('mvCat')||{}).value,monto=parseMoney((g('mvMonto')||{}).value),per=(g('mvPer')||{}).value,desc=(g('mvDesc')||{}).value,fecha=(g('mvFecha')||{}).value;
-  if(!monto||monto<=0){beep('err');toast(t('errMonto'),'err');return;}if(!fecha){beep('err');toast(t('errFecha'),'err');return;}
-  S.movimientos.unshift({id:Date.now(),tipo:tipo,cat:cat,monto:monto,persona:per,desc:desc,fecha:fecha,fijo:esFijo});
+  var tipo=(g('mvTipo')||{}).value,cat=(g('mvCat')||{}).value,monto=parseMoney((g('mvMonto')||{}).value),per=(g('mvPer')||{}).value,desc=(g('mvDesc')||{}).value,fecha=(g('mvFecha')||{}).value||hoyStr();
+  if(!monto||monto<=0){beep('err');toast(t('errMonto'),'err');return;}
+  S.movimientos.unshift({id:Date.now()+Math.random(),tipo:tipo,cat:cat,monto:monto,persona:per,desc:desc,fecha:fecha,fijo:esFijo});
   save();actualizarResumen();renderMovMes();
   if(g('mvMonto'))g('mvMonto').value='';if(g('mvDesc'))g('mvDesc').value='';esFijo=false;var ft=g('fijoTog');if(ft)ft.classList.remove('on');
 }
@@ -1029,7 +1029,7 @@ function openEdit(id){
 function closeEdit(){var eo=g('editOv');if(eo)eo.classList.remove('open');}
 function guardarEdit(){
   var id=Number((g('editId')||{}).value),m=S.movimientos.find(function(m){return m.id===id;});if(!m)return;
-  m.tipo=(g('editTipo')||{}).value;m.cat=(g('editCat')||{}).value;m.monto=parseMoney((g('editMonto')||{}).value);m.persona=(g('editPer')||{}).value;m.desc=(g('editDesc')||{}).value;m.fecha=(g('editFecha')||{}).value;
+  m.tipo=(g('editTipo')||{}).value;m.cat=(g('editCat')||{}).value;m.monto=parseMoney((g('editMonto')||{}).value);m.persona=(g('editPer')||{}).value;m.desc=(g('editDesc')||{}).value;m.fecha=(g('editFecha')||{}).value||hoyStr();
   save();actualizarResumen();renderMovMes();renderHist();closeEdit();
 }
 function poblarMeses(){
