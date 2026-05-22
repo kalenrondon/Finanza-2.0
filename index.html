@@ -577,7 +577,11 @@ tbody tr:hover td,.tbl-confirm td{background:var(--rdBg);}
     <div id="cp-sync" style="display:none">
       <div class="field" style="margin-bottom:10px"><label>Google Sheets ID</label><input type="text" id="cfgSid" placeholder="ID del spreadsheet"></div>
       <div class="field" style="margin-bottom:10px"><label>Apps Script URL</label><input type="text" id="cfgUrl" placeholder="https://script.google.com/macros/s/..."></div>
-      <p style="font-size:.72rem;color:var(--mu);margin-top:8px;line-height:1.5">Ver README.md del repo para el tutorial de Google Sheets.</p>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn-p" style="flex:1" onclick="exportToSheet()" id="btnExportGS">Exportar a Sheets</button>
+        <button class="btn-s" style="flex:1" onclick="importFromSheet()" id="btnImportGS">Importar desde Sheets</button>
+      </div>
+      <p style="font-size:.72rem;color:var(--mu);margin-top:8px;line-height:1.5">Configura primero en Ajustes > Sheets, guarda, luego usa estos botones.</p>
     </div>
     <div class="modal-btns">
       <button class="btn-p btn-full" id="btnGuardarCfg" onclick="guardarCfg()">Guardar ajustes</button>
@@ -693,7 +697,7 @@ es:{app:'Finanzas',cfg:'⚙ Ajustes',syncOk:'Sync ✓',syncLoad:'Sincronizando�
   compararCon:'Comparar con mes anterior',
   reordenarTabs:'Reordenar pestañas',reordenarDesc:'Cambia el orden de las pestañas usando las flechas.',
   nuevoMes:'Nuevo mes — datos actualizados',
-  statsTitle:'Estadísticas de',mesAnterior:'Mes anterior',configGSPrime:'Configura Google Sheets en Ajustes primero',exportando:'Exportando a Sheets…',importOk:'Importado desde Sheets ✓',sinDatosExport:'No hay datos para exportar',exportadoCSV:'CSV exportado ✓',confirmClearAll:'¿Borrar todos los datos?',confirmClearAll2:'Esta acción no se puede deshacer. ¿Continuar?',bienvenido:'Bienvenido'},
+  statsTitle:'Estadísticas de',mesAnterior:'Mes anterior',configGSPrime:'Configura Google Sheets en Ajustes primero',exportando:'Exportando a Sheets…',importOk:'Importado desde Sheets ✓',sinDatosExport:'No hay datos para exportar',exportadoCSV:'CSV exportado ✓',exportSheets:'Exportar a Sheets',importSheets:'Importar desde Sheets',confirmClearAll:'¿Borrar todos los datos?',confirmClearAll2:'Esta acción no se puede deshacer. ¿Continuar?',bienvenido:'Bienvenido'},
 en:{app:'Finance',cfg:'⚙ Settings',syncOk:'Synced ✓',syncLoad:'Syncing…',syncErr:'Error',syncLocal:'Local',
   disponible:'Available',ingresos:'Income',gastos:'Expenses',comprometido:'Committed',
   estesMes:'this month',acumulado:'total · see →',ahorrosCuotas:'savings + payments',
@@ -747,7 +751,7 @@ en:{app:'Finance',cfg:'⚙ Settings',syncOk:'Synced ✓',syncLoad:'Syncing…',s
   compararCon:'Compare with previous month',
   reordenarTabs:'Reorder tabs',reordenarDesc:'Reorder tabs using the arrows.',
   nuevoMes:'New month — data updated',
-  statsTitle:'Statistics for',mesAnterior:'Previous month',configGSPrime:'Configure Google Sheets in Settings first',exportando:'Exporting to Sheets…',importOk:'Imported from Sheets ✓',sinDatosExport:'No data to export',exportadoCSV:'CSV exported ✓',confirmClearAll:'Delete all data?',confirmClearAll2:'This action cannot be undone. Continue?',bienvenido:'Welcome'},
+  statsTitle:'Statistics for',mesAnterior:'Previous month',configGSPrime:'Configure Google Sheets in Settings first',exportando:'Exporting to Sheets…',importOk:'Imported from Sheets ✓',sinDatosExport:'No data to export',exportadoCSV:'CSV exported ✓',exportSheets:'Export to Sheets',importSheets:'Import from Sheets',confirmClearAll:'Delete all data?',confirmClearAll2:'This action cannot be undone. Continue?',bienvenido:'Welcome'},
 pt:{app:'Finanças',cfg:'⚙ Ajustes',syncOk:'Sync ✓',syncLoad:'Sincronizando…',syncErr:'Erro',syncLocal:'Local',
   disponible:'Disponível',ingresos:'Receitas',gastos:'Despesas',comprometido:'Comprometido',
   estesMes:'este mês',acumulado:'total · ver →',ahorrosCuotas:'poupanças + parcelas',
@@ -801,7 +805,7 @@ pt:{app:'Finanças',cfg:'⚙ Ajustes',syncOk:'Sync ✓',syncLoad:'Sincronizando�
   compararCon:'Comparar com mês anterior',
   reordenarTabs:'Reordenar abas',reordenarDesc:'Reordene as abas usando as setas.',
   nuevoMes:'Novo mês — dados atualizados',
-  statsTitle:'Estatísticas de',mesAnterior:'Mês anterior',configGSPrime:'Configure o Google Sheets nas Ajustes primeiro',exportando:'Exportando para Sheets…',importOk:'Importado do Sheets ✓',sinDatosExport:'Sem dados para exportar',exportadoCSV:'CSV exportado ✓',confirmClearAll:'Apagar todos os dados?',confirmClearAll2:'Esta ação não pode ser desfeita. Continuar?',bienvenido:'Bem-vindo'},
+  statsTitle:'Estatísticas de',mesAnterior:'Mês anterior',configGSPrime:'Configure o Google Sheets nas Ajustes primeiro',exportando:'Exportando para Sheets…',importOk:'Importado do Sheets ✓',sinDatosExport:'Sem dados para exportar',exportadoCSV:'CSV exportado ✓',exportSheets:'Exportar para Sheets',importSheets:'Importar do Sheets',confirmClearAll:'Apagar todos os dados?',confirmClearAll2:'Esta ação não pode ser desfeita. Continuar?',bienvenido:'Bem-vindo'},
 fr:{app:'Finances',cfg:'⚙ Réglages',syncOk:'Sync ✓',syncLoad:'Sync…',syncErr:'Erreur',syncLocal:'Local',
   disponible:'Disponible',ingresos:'Revenus',gastos:'Dépenses',comprometido:'Engagé',
   estesMes:'ce mois',acumulado:'total · voir →',ahorrosCuotas:'épargne + mensualités',
@@ -855,7 +859,7 @@ fr:{app:'Finances',cfg:'⚙ Réglages',syncOk:'Sync ✓',syncLoad:'Sync…',sync
   compararCon:'Comparer avec le mois précédent',
   reordenarTabs:'Réorganiser les onglets',reordenarDesc:'Réorganisez les onglets avec les flèches.',
   nuevoMes:'Nouveau mois — données mises à jour',
-  statsTitle:'Statistiques de',mesAnterior:'Mois précédent',configGSPrime:'Configurez d\'abord Google Sheets dans Réglages',exportando:'Exportation vers Sheets…',importOk:'Importé depuis Sheets ✓',sinDatosExport:'Aucune donnée à exporter',exportadoCSV:'CSV exporté ✓',confirmClearAll:'Effacer toutes les données?',confirmClearAll2:'Cette action est irréversible. Continuer?',bienvenido:'Bienvenue'}};
+  statsTitle:'Statistiques de',mesAnterior:'Mois précédent',configGSPrime:'Configurez d\'abord Google Sheets dans Réglages',exportando:'Exportation vers Sheets…',importOk:'Importé depuis Sheets ✓',sinDatosExport:'Aucune donnée à exporter',exportadoCSV:'CSV exporté ✓',exportSheets:'Exporter vers Sheets',importSheets:'Importer depuis Sheets',confirmClearAll:'Effacer toutes les données?',confirmClearAll2:'Cette action est irréversible. Continuer?',bienvenido:'Bienvenue'}};
 function t(k){const l=S&&S.cfg&&S.cfg.idioma||"es";return(T[l]||T.es)[k]||(T.es[k]||k);}
 const FRASES={
 es:["El que no lleva sus cuentas termina contando monedas pa el bus 🚌","Un peso ahorrado hoy es una tranquilidad segura mañana 🌤","Las deudas son como el sol del mediodia: queman sin pedir permiso ☀️","Anota todo, que la memoria falla pero las deudas no se olvidan 📝","El que gasta sin saber cuanto tiene llega a fin de mes rezando 🙏","Ponle fecha a tus metas o se quedan en sueños de carnaval 🎭","El interes de una deuda no descansa, ni en semana santa 😅","Los zapatos bonitos no pagan el arriendo. El ahorro si 👠","No es ser amarrado, es ser inteligente, parce 🧠","Un fondo de emergencia es raro hasta que la nevera se daña un viernes 🧊","Si los dos no cuadran la plata van a pelear mas que el trafico en hora pico 🚗","El que debe y no paga no duerme tranquilo ni con brisa fresca 🌊","Comparar precios no es tacañeria, es sabiduria de gente vivida 💡","Invertir en aprender siempre da ganancias, eso no lo roba nadie 📚","Registra cada peso antes de que se vaya solo, porque si se va solo 💨","Una meta sin ahorro es un paseo sin tiquete de regreso 🎟","El que no planea sus finanzas planea tener problemas 💯","El dinero disponible de hoy es la tranquilidad de mañana 🏖️","Cuenta la plata que te llega, no la que esperas que llegue 🤝","Entre los dos todo carga menos, incluyendo las deudas 👫"],
@@ -919,7 +923,7 @@ function updateLogo(){sv('li1',(S.cfg.n1||'Kalen').charAt(0).toUpperCase());sv('
 function prevLogo(){var n1=(g('cfgN1')||{}).value||'Kalen',n2=(g('cfgN2')||{}).value||'Rosa';si('prevLogoTxt',n1.charAt(0).toUpperCase()+' <span style="color:var(--mu2);font-weight:300">&amp;</span> '+n2.charAt(0).toUpperCase());}
 function updateNames(){var n1=S.cfg.n1,n2=S.cfg.n2;sv('chipP1',n1);sv('chipP2',n2);['mvop1','dop1','aop1','mtop1','gfop1','eop1'].forEach(function(id){var e=g(id);if(e)e.textContent=n1;});['mvop2','dop2','aop2','mtop2','gfop2','eop2'].forEach(function(id){var e=g(id);if(e)e.textContent=n2;});}
 function setSS(s){var dot=g('sdot'),lbl=g('slbl');if(dot)dot.className='sdot '+(s||'');if(lbl){var map={ok:t('syncOk'),loading:t('syncLoad'),err:t('syncErr')};lbl.textContent=map[s]||t('syncLocal');}}
-async function syncS(a,d){if(!S.cfg.scriptUrl)return;setSS('loading');try{await fetch(S.cfg.scriptUrl,{method:'POST',body:JSON.stringify({accion:a,datos:d})});setSS('ok');}catch(e){setSS('err');}}
+async function syncS(a,d){if(!S.cfg.scriptUrl)return null;setSS('loading');try{var r=await fetch(S.cfg.scriptUrl,{method:'POST',mode:'cors',redirect:'follow',headers:{'Content-Type':'text/plain'},body:JSON.stringify({accion:a,datos:d})});var txt=await r.text();var j;try{j=JSON.parse(txt);}catch(e){var m=txt.match(/\{[\s\S]*\}/);if(m)try{j=JSON.parse(m[0]);}catch(e2){}}if(j&&!j.error){setSS('ok');return j;}setSS('err');return null;}catch(e){setSS('err');return null;}}
 function buildHero(){
   var vis=S.cfg.heroVisible||{};
   var items=HERO_ITEMS.filter(function(h){return vis[h.id]!==false;});
@@ -1319,7 +1323,7 @@ function applyLang(){
     lTarjetas:t('tarjR'),lSecciones:t('seccionesT'),lFrasesTitle:t('frasesT'),lMostrarFrases:t('mostrarFrases'),lFrasesDesc:t('frasesBarra'),lVelFrases:t('velFrases'),fSeg10:t('seg10'),fSeg18:t('seg18'),fSeg30:t('seg30'),fSeg60:t('seg60'),fSeg0:t('segOpen'),
     lSonidosAct:t('sonidosAct'),lSonidosDesc:t('sonidosDesc'),lVolumen:t('volumen'),lNotifsDeudas:t('notifsDeudas'),lNotifsDesc:t('notifsDesc'),lDiasAntic:t('diasAntic'),nd3:t('d3'),nd5:t('d5'),nd7:t('d7'),nd15:t('d15'),
     lMoneda:t('moneda'),lFmtFecha:t('fmtFecha'),lIdioma:t('idioma'),lCatsAct:t('catsActuales'),lCatsDesc:t('catsDesc'),btnAddCat:t('addCat'),lNoBorrarDefault:t('noBorrar'),
-    btnGuardarCfg:t('guardarAjustes'),btnCancelarCfg:t('cancelar'),mTtlEditar:t('editarMov'),lETipo:t('tipo'),lECat:t('cat'),lEMonto:t('monto'),lEPer:t('deQuien'),lEDesc:t('desc'),lEFecha:t('fecha'),btnGuardarEdit:t('guardarCambios'),btnCancelarEdit:t('cancelar'),eOptIn:t('ingreso'),eOptOut:t('gasto'),optIngreso:t('ingreso'),optGasto:t('gasto'),
+    btnExportGS:t('exportSheets'),btnImportGS:t('importSheets'),btnGuardarCfg:t('guardarAjustes'),btnCancelarCfg:t('cancelar'),mTtlEditar:t('editarMov'),lETipo:t('tipo'),lECat:t('cat'),lEMonto:t('monto'),lEPer:t('deQuien'),lEDesc:t('desc'),lEFecha:t('fecha'),btnGuardarEdit:t('guardarCambios'),btnCancelarEdit:t('cancelar'),eOptIn:t('ingreso'),eOptOut:t('gasto'),optIngreso:t('ingreso'),optGasto:t('gasto'),
     ingDesc:t('loQueEntro'),ingTtlMes:t('totalMes'),ingSobLbl:t('sobranteAnt'),ingBrutoLbl:t('disponibleBruto'),btnCerrarIng:t('cerrar'),fTodos:t('todos'),fIngresos:t('ingresos'),fGastos:t('gastos'),fTodosS:t('todosMeses'),mTtlComp:t('compTitulo'),mDescComp:t('compDesc'),btnCerrarComp:t('cerrar'),ttlHistDeudas:t('histDeudas'),emptyHistDeudas:t('sinHistDeudas'),
     lComparar:t('compararCon'),lReordenar:t('reordenarTabs'),lReordenarDesc:t('reordenarDesc')};
   Object.entries(m1).forEach(function(kv){sv(kv[0],kv[1]);});
@@ -1332,10 +1336,10 @@ function applyLang(){
   renderMovMes();renderHist();
   if(g('panel-finanzas')&&g('panel-finanzas').classList.contains('active')){renderDeudas();renderAhorros();renderMetas();}
 }
-function init(){load();S.statsMes=hoyMes();updateLogo();updateNames();fillCats();initMoney();applyTheme();applyLang();buildHero();buildNav();startFrases();presetBtns();mesAutoReset();checkFijos();actualizarResumen();renderMovMes();poblarMeses();if(S.cfg.notifs)reqNotifPerm();showFrase(false);}
+function init(){load();S.statsMes=hoyMes();updateLogo();updateNames();fillCats();initMoney();applyTheme();applyLang();buildHero();buildNav();startFrases();presetBtns();mesAutoReset();checkFijos();actualizarResumen();renderMovMes();poblarMeses();if(S.cfg.notifs)reqNotifPerm();showFrase(false);initGS();}
 function initGS(){if(!S.cfg.sheetId||!S.cfg.scriptUrl)return;syncS("obtener",{sheetId:S.cfg.sheetId});}
-function exportToSheet(){if(!S.cfg.sheetId||!S.cfg.scriptUrl){toast(t("configGSPrime"),"err");return;}var data=JSON.stringify({movimientos:S.movimientos,deudas:S.deudas,ahorros:S.ahorros,metas:S.metas});syncS("exportar",{sheetId:S.cfg.sheetId,data:data,cfg:JSON.stringify(S.cfg)});toast(t("exportando"),"ok");}
-function importFromSheet(){if(!S.cfg.sheetId||!S.cfg.scriptUrl){toast(t("configGSPrime"),"err");return;}syncS("importar",{sheetId:S.cfg.sheetId}).then(function(r){if(r&&r.data){var d=JSON.parse(r.data);if(d.movimientos)S.movimientos=d.movimientos;if(d.deudas)S.deudas=d.deudas;if(d.ahorros)S.ahorros=d.ahorros;if(d.metas)S.metas=d.metas;save();actualizarResumen();renderMovMes();renderHist();buildHero();toast(t("importOk"),"ok");}});}
+async function exportToSheet(){if(!S.cfg.sheetId||!S.cfg.scriptUrl){toast(t("configGSPrime"),"err");return;}var data=JSON.stringify({movimientos:S.movimientos,deudas:S.deudas,ahorros:S.ahorros,metas:S.metas});var r=await syncS("exportar",{sheetId:S.cfg.sheetId,data:data,cfg:JSON.stringify(S.cfg)});if(r&&r.ok)toast(t("exportando"),"ok");else toast(t("syncErr"),"err");}
+async function importFromSheet(){if(!S.cfg.sheetId||!S.cfg.scriptUrl){toast(t("configGSPrime"),"err");return;}var r=await syncS("importar",{sheetId:S.cfg.sheetId});if(r&&r.data){try{var d=JSON.parse(r.data);if(d.movimientos)S.movimientos=d.movimientos;if(d.deudas)S.deudas=d.deudas;if(d.ahorros)S.ahorros=d.ahorros;if(d.metas)S.metas=d.metas;save();actualizarResumen();renderMovMes();renderHist();buildHero();toast(t("importOk"),"ok");}catch(e){toast(t("syncErr"),"err");}}else toast(t("syncErr"),"err");}
 function exportCSV(){if(!S.movimientos.length){toast(t("sinDatosExport"),"err");return;}var rows=[["Fecha","Tipo","Categoria","Persona","Monto","Descripcion"]];S.movimientos.forEach(function(m){rows.push([m.fecha,m.tipo,m.cat,m.persona,m.monto,m.desc||""]);});var csv=rows.map(function(r){return r.map(function(c){return'"'+String(c).replace(/"/g,'""')+'"';}).join(",");}).join("\n");var blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download="K&R_"+hoyStr()+".csv";a.click();URL.revokeObjectURL(url);toast(t("exportadoCSV"),"ok");}
 function clearAllData(){if(!confirm(t("confirmClearAll")))return;if(!confirm(t("confirmClearAll2")))return;localStorage.removeItem("kr_s");localStorage.removeItem("kr_fi");localStorage.removeItem("kr_ultMes");location.reload();}
 document.addEventListener('DOMContentLoaded',init);
